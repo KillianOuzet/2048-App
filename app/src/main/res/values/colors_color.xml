@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--       THÈME COLORÉ (Color / Neon)        -->
+    <!-- ════════════════════════════════════════ -->
+
+    <!-- Arrière-plans -->
+    <color name="color_bg">#0E0820</color>
+    <color name="color_bg2">#160C2E</color>
+    <color name="color_bg3">#1E1038</color>
+
+    <!-- Cartes -->
+    <color name="color_card">#1A0E32</color>
+    <color name="color_card2">#221440</color>
+    <color name="color_card3">#2A1A50</color>
+
+    <!-- Couleurs principales -->
+    <color name="color_primary">#FF6B9D</color>
+    <color name="color_primary2">#E0508A</color>
+    <color name="color_accent">#00E5FF</color>
+    <color name="color_danger">#FF4466</color>
+
+    <!-- Textes -->
+    <color name="color_text">#F0EAFF</color>
+    <color name="color_text2">#9080B0</color>
+    <color name="color_text3">#503870</color>
+
+    <!-- Bordures -->
+    <color name="color_border">#12FFFFFF</color>     <!-- rgba(255,255,255,0.07) -->
+    <color name="color_border2">#24FFFFFF</color>    <!-- rgba(255,255,255,0.14) -->
+
+    <!-- Grille de jeu -->
+    <color name="color_tile_bg">#2A1450</color>
+
+    <!-- Tuiles par valeur -->
+    <color name="color_tile_2">#3A1C60</color>
+    <color name="color_tile_4">#4A2470</color>
+    <color name="color_tile_8">#FF6B9D</color>
+    <color name="color_tile_16">#FF4488</color>
+    <color name="color_tile_32">#FF2266</color>
+    <color name="color_tile_64">#CC0044</color>
+    <color name="color_tile_128">#00E5FF</color>
+    <color name="color_tile_256">#00C8E0</color>
+    <color name="color_tile_512">#00AAC0</color>
+    <color name="color_tile_1024">#9B59FF</color>
+    <color name="color_tile_2048">#FFD600</color>
+
+    <!-- Texte tuiles -->
+    <color name="color_tile_text_dark">#F0EAFF</color>
+    <color name="color_tile_text_light">#F0EAFF</color>
+
+    <!-- Badge / notification -->
+    <color name="color_badge_bg">#1EFF6B9D</color>   <!-- rgba(255,107,157,0.12) -->
+    <color name="color_badge_text">#FF9DC5</color>
+
+    <!-- Toggle (interrupteur) -->
+    <color name="color_toggle_off">#2A1450</color>
+    <color name="color_toggle_on">#00E5FF</color>  <!-- = accent -->
+
+    <!-- Navigation bas de page -->
+    <color name="color_nav">#120A28</color>
+    <color name="color_nav_active">#1EFF6B9D</color>  <!-- rgba(255,107,157,0.12) -->
+
+    <!-- Scrollbar -->
+    <color name="color_scrollbar">#2A1450</color>
+
+</resources>
