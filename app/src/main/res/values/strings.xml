@@ -4,5 +4,5 @@
     <string name="jouer_bottom_nav_bar">JOUER</string>
     <string name="scores_bottom_nav_bar">SCORES</string>
     <string name="stats_bottom_nav_bar">STATS</string>
-    <string name="regleges_bottom_nav_bar">REGLEGES</string>
+    <string name="reglages_bottom_nav_bar">REGLAGES</string>
 </resources>

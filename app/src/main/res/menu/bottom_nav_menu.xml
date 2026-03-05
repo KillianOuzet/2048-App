@@ -19,5 +19,5 @@
     <item
         android:id="@+id/reglages"
         android:icon="@drawable/gear"
-        android:title="@string/regleges_bottom_nav_bar" />
+        android:title="@string/reglages_bottom_nav_bar" />
 </menu>
