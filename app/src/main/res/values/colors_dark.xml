@@ -56,7 +56,7 @@
 
     <!-- Toggle (interrupteur) -->
     <color name="dark_toggle_off">#3A3828</color>
-    <color name="dark_toggle_on">#50C090</color>  <!-- = accent -->
+    <color name="dark_toggle_on">#5dbf8a</color>  <!-- = accent -->
 
     <!-- Navigation bas de page -->
     <color name="dark_nav">#1A1810</color>
