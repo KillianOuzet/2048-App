@@ -14,6 +14,11 @@
         <item name="android:fontFamily">@font/outfit</item>
     </style>
 
+    <style name="SliderLabelPrimary" parent="Widget.MaterialComponents.Tooltip">
+        <item name="backgroundTint">?attr/primaryColor</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <!-- ═══════════════════════════════════════════════════════════ -->
     <!--                     THÈME CLAIR                            -->
     <!-- ═══════════════════════════════════════════════════════════ -->
