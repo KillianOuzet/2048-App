@@ -9,8 +9,10 @@
         <!-- Désactive l'ActionBar par défaut -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-    </style>
 
+        <item name="fontFamily">@font/outfit</item>
+        <item name="android:fontFamily">@font/outfit</item>
+    </style>
 
     <!-- ═══════════════════════════════════════════════════════════ -->
     <!--                     THÈME CLAIR                            -->

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Textes -->
+    <dimen name="text_page_title">22sp</dimen>
+    <dimen name="text_btn_theme">12sp</dimen>
+    <dimen name="text_settings_title">14sp</dimen>
+
+</resources>

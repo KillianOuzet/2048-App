@@ -5,10 +5,6 @@
         android:icon="@drawable/house"
         android:title="@string/accueil_bottom_nav_bar" />
     <item
-        android:id="@+id/jouer"
-        android:icon="@drawable/controller"
-        android:title="@string/jouer_bottom_nav_bar" />
-    <item
         android:id="@+id/scores"
         android:icon="@drawable/trophy"
         android:title="@string/scores_bottom_nav_bar" />
