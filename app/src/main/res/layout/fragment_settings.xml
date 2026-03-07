@@ -21,10 +21,10 @@
             app:strokeWidth="1dp">
 
             <ImageView
-                android:contentDescription="Icon engrenage"
                 android:layout_width="22dp"
                 android:layout_height="23dp"
                 android:layout_gravity="center"
+                android:contentDescription="Icon engrenage"
                 android:src="@drawable/gear" />
 
         </com.google.android.material.card.MaterialCardView>
@@ -57,7 +57,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/settings_toolbar"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="25dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,6 +78,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 app:cardBackgroundColor="?cardColor"
                 app:cardCornerRadius="12dp"
                 app:strokeColor="?borderColor2"
@@ -85,9 +87,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="vertical">
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -154,6 +157,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
+                        android:gravity="center"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -186,6 +190,405 @@
                             android:checked="true"
                             app:thumbTint="@color/white"
                             app:trackTint="@color/switch_track_selector" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:letterSpacing="0.12"
+                android:text="Son &amp; Musique"
+                android:textAllCaps="true"
+                android:textColor="?textColor3"
+                app:fontFamily="@font/outfit_bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:cardBackgroundColor="?cardColor"
+                app:cardCornerRadius="12dp"
+                app:strokeColor="?borderColor2"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="15dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Musique de fond"
+                                android:textColor="?textColor"
+                                android:textSize="@dimen/text_settings_title"
+                                app:fontFamily="@font/outfit_semi_bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ambiance sonore pendant le jeu"
+                                android:textColor="?textColor3"
+                                app:fontFamily="@font/outfit_thin" />
+
+                        </LinearLayout>
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switch_musique_de_fond"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            app:thumbTint="@color/white"
+                            app:trackTint="@color/switch_track_selector" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="1sp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        app:dividerColor="?borderColor2" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="🎵 Volume musique"
+                                android:textColor="?textColor"
+                                android:textSize="@dimen/text_settings_title"
+                                app:fontFamily="@font/outfit_semi_bold" />
+
+                            <TextView
+                                android:id="@+id/text_volume_musique"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="100%"
+                                android:textAlignment="textEnd"
+                                android:textColor="?primaryColor"
+                                android:textSize="@dimen/text_settings_title" />
+
+                        </LinearLayout>
+
+                        <com.google.android.material.slider.Slider
+                            android:id="@+id/slider_volume_musique"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="-3dp"
+                            android:layout_marginRight="-3dp"
+                            android:stepSize="1.0"
+                            android:value="100.0"
+                            android:valueFrom="0.0"
+                            android:valueTo="100.0"
+                            app:labelStyle="@style/SliderLabelPrimary"
+                            app:thumbColor="@color/white"
+                            app:trackColor="?primaryColor" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="1sp"
+                        android:layout_marginBottom="15dp"
+                        app:dividerColor="?borderColor2" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Sons des mouvements"
+                                android:textColor="?textColor"
+                                android:textSize="@dimen/text_settings_title"
+                                app:fontFamily="@font/outfit_semi_bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Clic à chaque déplacement"
+                                android:textColor="?textColor3"
+                                app:fontFamily="@font/outfit_thin" />
+
+                        </LinearLayout>
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switch_sons_des_mouvements"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            app:thumbTint="@color/white"
+                            app:trackTint="@color/switch_track_selector" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="1sp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        app:dividerColor="?borderColor2" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Sons de fusion"
+                                android:textColor="?textColor"
+                                android:textSize="@dimen/text_settings_title"
+                                app:fontFamily="@font/outfit_semi_bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Effet sonore lors d'une fusion"
+                                android:textColor="?textColor3"
+                                app:fontFamily="@font/outfit_thin" />
+
+                        </LinearLayout>
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switch_sons_de_fusion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            app:thumbTint="@color/white"
+                            app:trackTint="@color/switch_track_selector" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="1sp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        app:dividerColor="?borderColor2" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="🔊 Volume effets"
+                                android:textColor="?textColor"
+                                android:textSize="@dimen/text_settings_title"
+                                app:fontFamily="@font/outfit_semi_bold" />
+
+                            <TextView
+                                android:id="@+id/text_volume_effets"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="100%"
+                                android:textAlignment="textEnd"
+                                android:textColor="?primaryColor"
+                                android:textSize="@dimen/text_settings_title" />
+
+                        </LinearLayout>
+
+                        <com.google.android.material.slider.Slider
+                            android:id="@+id/slider_volume_effets"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="-3dp"
+                            android:layout_marginRight="-3dp"
+                            android:stepSize="1.0"
+                            android:value="100.0"
+                            android:valueFrom="0.0"
+                            android:valueTo="100.0"
+                            app:labelStyle="@style/SliderLabelPrimary"
+                            app:thumbColor="@color/white"
+                            app:trackColor="?primaryColor" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:letterSpacing="0.12"
+                android:text="Zone de danger"
+                android:textAllCaps="true"
+                android:textColor="?textColor3"
+                app:fontFamily="@font/outfit_bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="?dangerBgColor"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="?dangerBorderColor"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Réinitialiser les scores -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Réinitialiser les scores"
+                                android:textColor="?dangerColor"
+                                android:textSize="@dimen/text_settings_title"
+                                app:fontFamily="@font/outfit_semi_bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Efface le classement local"
+                                android:textColor="?textColor3"
+                                app:fontFamily="@font/outfit_thin" />
+
+                        </LinearLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_reset_scores"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Réinitialiser"
+                            android:textColor="?dangerColor"
+                            android:textSize="11sp"
+                            app:cornerRadius="10dp"
+                            app:fontFamily="@font/outfit_bold"
+                            app:strokeColor="?dangerBorderColor" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        app:dividerColor="?dangerBorderColor" />
+
+                    <!-- Effacer toutes les données -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Effacer toutes les données"
+                                android:textColor="?dangerColor"
+                                android:textSize="@dimen/text_settings_title"
+                                app:fontFamily="@font/outfit_semi_bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Remet le jeu à zéro complet"
+                                android:textColor="?textColor3"
+                                app:fontFamily="@font/outfit_thin" />
+
+                        </LinearLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_clear_data"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Supprimer"
+                            android:textColor="?dangerColor"
+                            android:textSize="11sp"
+                            app:cornerRadius="10dp"
+                            app:fontFamily="@font/outfit_bold"
+                            app:strokeColor="?dangerBorderColor" />
 
                     </LinearLayout>
 

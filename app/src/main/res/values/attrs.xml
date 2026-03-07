@@ -19,7 +19,6 @@
     <attr name="primaryColor" format="color" />
     <attr name="primaryColor2" format="color" />
     <attr name="accentColor" format="color" />
-    <attr name="dangerColor" format="color" />
 
     <!-- Textes -->
     <attr name="textColor" format="color" />
@@ -64,5 +63,9 @@
 
     <!-- Scrollbar -->
     <attr name="scrollbarColor" format="color" />
+
+    <attr name="dangerColor" format="color" />
+    <attr name="dangerBgColor" format="color" />
+    <attr name="dangerBorderColor" format="color" />
 
 </resources>

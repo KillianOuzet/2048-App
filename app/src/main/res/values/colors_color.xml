@@ -65,4 +65,8 @@
     <!-- Scrollbar -->
     <color name="color_scrollbar">#2A1450</color>
 
+    <color name="color_dangerColor">#FF4466</color>
+    <color name="color_dangerBgColor">#0FFF4466</color>
+    <color name="color_dangerBorderColor">#2EFF4466</color>
+
 </resources>

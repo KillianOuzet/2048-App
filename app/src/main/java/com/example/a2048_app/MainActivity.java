@@ -19,6 +19,12 @@ public class MainActivity extends BaseActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        if (prefs.getInt("musiqueDeFond", 1) == 1) {
+            MusicManager.getInstance().demarrerMusique(this);
+        } else {
+            MusicManager.getInstance().arreterTout();
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0);
