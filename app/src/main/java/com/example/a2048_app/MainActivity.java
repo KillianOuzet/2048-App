@@ -1,11 +1,8 @@
 package com.example.a2048_app;
 
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -13,30 +10,10 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences prefs = getSharedPreferences("2048_settings", MODE_PRIVATE);
-        int themeChoisi = prefs.getInt("themeChoisi", -1);
-
-        if (themeChoisi == -1) {
-            int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
-                themeChoisi = 1;
-            } else {
-                themeChoisi = 0;
-            }
-            prefs.edit().putInt("themeChoisi", themeChoisi).apply();
-        }
-
-        if (themeChoisi == 0) {
-            setTheme(R.style.Theme_App_Light);
-        } else if (themeChoisi == 1) {
-            setTheme(R.style.Theme_App_Dark);
-        } else if (themeChoisi == 2) {
-            setTheme(R.style.Theme_App_Color);
-        }
 
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
