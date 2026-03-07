@@ -65,4 +65,8 @@
     <!-- Scrollbar -->
     <color name="light_scrollbar">#DDDDDD</color>
 
+    <color name="light_dangerColor">#E05050</color>
+    <color name="light_dangerBgColor">#0FE05050</color>   <!-- rgba(224,80,80,0.06) -->
+    <color name="light_dangerBorderColor">#2EE05050</color> <!-- rgba(224,80,80,0.18) -->
+
 </resources>

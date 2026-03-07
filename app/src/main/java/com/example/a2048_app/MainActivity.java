@@ -42,7 +42,11 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        MusicManager.getInstance().demarrerMusique(this);
+        if (prefs.getInt("musiqueDeFond", 1) == 1) {
+            MusicManager.getInstance().demarrerMusique(this);
+        } else {
+            MusicManager.getInstance().arreterTout();
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

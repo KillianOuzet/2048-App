@@ -65,4 +65,8 @@
     <!-- Scrollbar -->
     <color name="dark_scrollbar">#2A2820</color>
 
+    <color name="dark_dangerColor">#E06060</color>
+    <color name="dark_dangerBgColor">#0FE06060</color>
+    <color name="dark_dangerBorderColor">#2EE06060</color>
+
 </resources>

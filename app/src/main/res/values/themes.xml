@@ -59,7 +59,6 @@
         <item name="primaryColor">@color/light_primary</item>
         <item name="primaryColor2">@color/light_primary2</item>
         <item name="accentColor">@color/light_accent</item>
-        <item name="dangerColor">@color/light_danger</item>
 
         <!-- Textes -->
         <item name="textColor">@color/light_text</item>
@@ -105,6 +104,10 @@
         <!-- Scrollbar -->
         <item name="scrollbarColor">@color/light_scrollbar</item>
 
+        <item name="dangerColor">@color/light_dangerColor</item>
+        <item name="dangerBgColor">@color/light_dangerBgColor</item>
+        <item name="dangerBorderColor">@color/light_dangerBorderColor</item>
+
     </style>
 
 
@@ -148,7 +151,6 @@
         <item name="primaryColor">@color/dark_primary</item>
         <item name="primaryColor2">@color/dark_primary2</item>
         <item name="accentColor">@color/dark_accent</item>
-        <item name="dangerColor">@color/dark_danger</item>
 
         <!-- Textes -->
         <item name="textColor">@color/dark_text</item>
@@ -194,6 +196,10 @@
         <!-- Scrollbar -->
         <item name="scrollbarColor">@color/dark_scrollbar</item>
 
+        <item name="dangerColor">@color/dark_dangerColor</item>
+        <item name="dangerBgColor">@color/dark_dangerBgColor</item>
+        <item name="dangerBorderColor">@color/dark_dangerBorderColor</item>
+
     </style>
 
 
@@ -237,7 +243,6 @@
         <item name="primaryColor">@color/color_primary</item>
         <item name="primaryColor2">@color/color_primary2</item>
         <item name="accentColor">@color/color_accent</item>
-        <item name="dangerColor">@color/color_danger</item>
 
         <!-- Textes -->
         <item name="textColor">@color/color_text</item>
@@ -282,6 +287,10 @@
 
         <!-- Scrollbar -->
         <item name="scrollbarColor">@color/color_scrollbar</item>
+
+        <item name="dangerColor">@color/color_dangerColor</item>
+        <item name="dangerBgColor">@color/color_dangerBgColor</item>
+        <item name="dangerBorderColor">@color/color_dangerBorderColor</item>
 
     </style>
 
