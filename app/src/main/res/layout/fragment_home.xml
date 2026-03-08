@@ -9,70 +9,387 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="18dp"
-        android:paddingEnd="18dp"
         android:paddingTop="8dp"
+        android:paddingEnd="18dp"
         android:paddingBottom="8dp"
-        app:contentInsetStart="0dp"
-        app:contentInsetEnd="0dp">
+        app:contentInsetEnd="0dp"
+        app:contentInsetStart="0dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:background="@drawable/bg_logo"
-                android:text="@string/GameName"
-                android:textColor="@android:color/white"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                app:fontFamily="@font/outfit_black" />
-
-            <!-- Titre -->
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="@string/GameName"
-                android:textColor="?attr/textColor"
-                android:textSize="26sp"
-                android:letterSpacing="-0.03"
-                app:fontFamily="@font/outfit_black" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/bg_logo"
+                    android:gravity="center"
+                    android:text="@string/GameName"
+                    android:textColor="@android:color/white"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/outfit_black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.03"
+                    android:text="@string/GameName"
+                    android:textColor="?attr/textColor"
+                    android:textSize="26sp"
+                    app:fontFamily="@font/outfit_black" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="?cardColor"
+                    app:cardCornerRadius="12dp"
+                    app:contentPadding="10dp"
+                    app:strokeColor="?borderColor2"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Score"
+                            android:textColor="?textColor3"
+                            app:fontFamily="@font/outfit_bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="3 840"
+                            android:textColor="?textColor"
+                            app:fontFamily="@font/outfit_bold" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="?cardColor"
+                    app:cardCornerRadius="12dp"
+                    app:contentPadding="10dp"
+                    app:strokeColor="?borderColor2"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Meilleur"
+                            android:textColor="?textColor3"
+                            app:fontFamily="@font/outfit_bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="69 612"
+                            android:textColor="?textColor"
+                            app:fontFamily="@font/outfit_bold" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="?cardColor"
+                    app:cardCornerRadius="12dp"
+                    app:contentPadding="10dp"
+                    app:strokeColor="?borderColor2"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Parties"
+                            android:textColor="?textColor3"
+                            app:fontFamily="@font/outfit_bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="47"
+                            android:textColor="?textColor"
+                            app:fontFamily="@font/outfit_bold" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
         </LinearLayout>
 
     </com.google.android.material.appbar.MaterialToolbar>
 
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/newGame_button"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:paddingVertical="16dp"
-        android:layout_below="@id/home_toolbar"
-        android:text="▶Nouvelle partie"
-        android:textSize="20sp"
-        android:letterSpacing="-0.03"
-        app:fontFamily="@font/outfit_black"
-        android:backgroundTint="?attr/primaryColor"
-        android:textColor="@color/white"
-        app:cornerRadius="16dp"
-        android:inputType="text"
-        >
+        android:layout_below="@+id/home_toolbar"
+        android:orientation="vertical"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp">
 
-    </com.google.android.material.button.MaterialButton>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/newGame_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?attr/primaryColor"
+            android:inputType="text"
+            android:letterSpacing="-0.03"
+            android:paddingVertical="16dp"
+            android:text="▶ Nouvelle partie"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:cornerRadius="16dp"
+            app:fontFamily="@font/outfit_black">
 
+        </com.google.android.material.button.MaterialButton>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:includeFontPadding="false"
+            android:letterSpacing="0.12"
+            android:text="Modes de jeu"
+            android:textAllCaps="true"
+            android:textColor="?textColor3"
+            android:textSize="@dimen/text_btn_theme"
+            app:fontFamily="@font/outfit_bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Home"
-        android:textColor="?primaryColor" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="?cardColor"
+                app:cardCornerRadius="12dp"
+                app:strokeColor="?borderColor2"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="23dp"
+                        android:contentDescription="Icon trophée"
+                        android:src="@drawable/trophy" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Classique"
+                        android:textColor="?textColor"
+                        android:textSize="@dimen/text_settings_title"
+                        app:fontFamily="@font/outfit_semi_bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Grille 4×4, atteindre la tuile 2048 !"
+                        android:textColor="?textColor3"
+                        app:fontFamily="@font/outfit_thin" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="?cardColor"
+                app:cardCornerRadius="12dp"
+                app:strokeColor="?borderColor2"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="23dp"
+                        android:contentDescription="Icon trophée"
+                        android:src="@drawable/crossed_swords" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Multijoueur"
+                        android:textColor="?textColor"
+                        android:textSize="@dimen/text_settings_title"
+                        app:fontFamily="@font/outfit_semi_bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2 joueurs, 2 grilles, même appareil"
+                        android:textColor="?textColor3"
+                        app:fontFamily="@font/outfit_thin" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="?cardColor"
+                app:cardCornerRadius="12dp"
+                app:strokeColor="?borderColor2"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="23dp"
+                        android:contentDescription="Icon trophée"
+                        android:src="@drawable/stopwatch" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Défi journalier"
+                        android:textColor="?textColor"
+                        android:textSize="@dimen/text_settings_title"
+                        app:fontFamily="@font/outfit_semi_bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Score cible en temps limité"
+                        android:textColor="?textColor3"
+                        app:fontFamily="@font/outfit_thin" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="?cardColor"
+                app:cardCornerRadius="12dp"
+                app:strokeColor="?borderColor2"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="23dp"
+                        android:contentDescription="Icon trophée"
+                        android:src="@drawable/book" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tutoriel"
+                        android:textColor="?textColor"
+                        android:textSize="@dimen/text_settings_title"
+                        app:fontFamily="@font/outfit_semi_bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Apprendre les règles en jouant"
+                        android:textColor="?textColor3"
+                        app:fontFamily="@font/outfit_thin" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>
