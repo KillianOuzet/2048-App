@@ -17,9 +17,17 @@ public class Grid {
         generateTile();
     }
 
-    public int getSize() { return size; }
-    public Tile[][] getGrid() { return grid; }
-    public int getScore() { return score; }
+    public int getSize() {
+        return size;
+    }
+
+    public Tile[][] getGrid() {
+        return grid;
+    }
+
+    public int getScore() {
+        return score;
+    }
 
     // SLIDES --------------------------------------------------------------------------------------
     public boolean rightSlide() {
@@ -35,6 +43,7 @@ public class Grid {
         if (moved) generateTile();
         return moved;
     }
+
     public boolean leftSlide() {
         boolean moved = false;
         for (int row = 0; row < size; row++) {
@@ -62,6 +71,7 @@ public class Grid {
         if (moved) generateTile();
         return moved;
     }
+
     public boolean downSlide() {
         boolean moved = false;
         for (int col = 0; col < size; col++) {
@@ -130,8 +140,7 @@ public class Grid {
     public boolean isWon() {
         for (int row = 0; row < size; row++)
             for (int col = 0; col < size; col++)
-                if (grid[row][col] != null && grid[row][col].getValue() == 2048)
-                    return true;
+                if (grid[row][col] != null && grid[row][col].getValue() == 2048) return true;
         return false;
     }
 
@@ -145,8 +154,8 @@ public class Grid {
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
                 int val = grid[row][col].getValue();
-                if (row + 1 < size && grid[row+1][col].getValue() == val) return false;
-                if (col + 1 < size && grid[row][col+1].getValue() == val) return false;
+                if (row + 1 < size && grid[row + 1][col].getValue() == val) return false;
+                if (col + 1 < size && grid[row][col + 1].getValue() == val) return false;
             }
         }
         return true;
@@ -157,6 +166,17 @@ public class Grid {
         return row >= 0 && row < size && col >= 0 && col < size;
     }
 
+    public int getMaxTile() {
+        int max = 0;
+
+        for (int r = 0; r < this.getSize(); r++) {
+            for (int c = 0; c < this.getSize(); c++) {
+                Tile t = this.getGrid()[r][c];
+                if (t != null && t.getValue() > max) max = t.getValue();
+            }
+        }
+        return max;
+    }
 }
 
 
