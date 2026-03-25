@@ -26,6 +26,7 @@ public class HomeFragment extends Fragment {
         buttonNewGame.setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), GameActivity.class);
             intent.putExtra("grid_size", 4);
+            intent.putExtra("game_mode", "classique");
             startActivity(intent);
         });
 
