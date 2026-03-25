@@ -1,8 +1,11 @@
 package com.example.a2048_app;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -31,8 +34,11 @@ public class GameActivity extends BaseActivity {
     private int bestScore = 0;
     private String bestScoreKey;
 
+    private SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.prefs = getSharedPreferences("2048_settings", Context.MODE_PRIVATE);
 
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -47,7 +53,6 @@ public class GameActivity extends BaseActivity {
 
         bestScoreKey = "best_score_" + gameMode + "_" + gridSize;
 
-        android.content.SharedPreferences prefs = getSharedPreferences("2048_settings", MODE_PRIVATE);
         bestScore = prefs.getInt(bestScoreKey, 0);
 
         tvBestScore.setText(String.valueOf(bestScore));
@@ -167,16 +172,19 @@ public class GameActivity extends BaseActivity {
                     cell.setTextColor(TileTheme.getTextColor(this, newValue));
 
                     // --- LES ANIMATIONS ---
-                    if (oldValue == 0 && newValue > 0) {
-                        // 1. Apparition (Nouvelle tuile) : Elle grandit de 0 à 1
-                        cell.setScaleX(0f);
-                        cell.setScaleY(0f);
-                        cell.animate().scaleX(1f).scaleY(1f).setDuration(150).start();
-                    } else if (newValue > oldValue) {
-                        // 2. Fusion : Effet de rebond (Pop !) on grandit à 1.2 puis on revient à 1
-                        cell.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100).withEndAction(() -> {
-                            cell.animate().scaleX(1f).scaleY(1f).setDuration(100).start();
-                        }).start();
+
+                    if (prefs.getInt("animationsTuiles", 1) == 1) {
+                        if (oldValue == 0 && newValue > 0) {
+                            // 1. Apparition (Nouvelle tuile) : Elle grandit de 0 à 1
+                            cell.setScaleX(0f);
+                            cell.setScaleY(0f);
+                            cell.animate().scaleX(1f).scaleY(1f).setDuration(150).start();
+                        } else if (newValue > oldValue) {
+                            // 2. Fusion : Effet de rebond (Pop !) on grandit à 1.2 puis on revient à 1
+                            cell.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100).withEndAction(() -> {
+                                cell.animate().scaleX(1f).scaleY(1f).setDuration(100).start();
+                            }).start();
+                        }
                     }
                 }
             }
