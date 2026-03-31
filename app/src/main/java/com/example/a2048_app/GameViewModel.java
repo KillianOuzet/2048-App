@@ -13,7 +13,11 @@ public class GameViewModel extends ViewModel {
         this.currentGrid = new MutableLiveData<>(new Grid(gridSize));
     }
 
-    public LiveData<Grid> getCurrentGrid(){
+    public GameViewModel(Grid savedGrid) {
+        this.currentGrid = new MutableLiveData<>(savedGrid);
+    }
+
+    public LiveData<Grid> getCurrentGrid() {
         return this.currentGrid;
     }
 
@@ -21,19 +25,22 @@ public class GameViewModel extends ViewModel {
         currentGrid.setValue(new Grid(size));
     }
 
-    public void rightSlide(){
+    public void rightSlide() {
         Objects.requireNonNull(this.currentGrid.getValue()).rightSlide();
         this.currentGrid.setValue(this.currentGrid.getValue());
     }
-    public void leftSlide(){
+
+    public void leftSlide() {
         Objects.requireNonNull(this.currentGrid.getValue()).leftSlide();
         this.currentGrid.setValue(this.currentGrid.getValue());
     }
-    public void upSlide(){
+
+    public void upSlide() {
         Objects.requireNonNull(this.currentGrid.getValue()).upSlide();
         this.currentGrid.setValue(this.currentGrid.getValue());
     }
-    public void downSlide(){
+
+    public void downSlide() {
         Objects.requireNonNull(this.currentGrid.getValue()).downSlide();
         this.currentGrid.setValue(this.currentGrid.getValue());
     }
