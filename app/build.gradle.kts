@@ -42,4 +42,5 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation("androidx.media3:media3-exoplayer:1.9.2")
     implementation("androidx.lifecycle:lifecycle-process:2.10.0")
+    implementation("com.google.code.gson:gson:2.10.1")
 }

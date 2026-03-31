@@ -6,14 +6,26 @@ import androidx.lifecycle.ViewModelProvider;
 
 public class GameViewModelFactory implements ViewModelProvider.Factory {
     private final int gridSize;
+    private Grid savedGrid = null;
 
     public GameViewModelFactory(int gridSize) {
         this.gridSize = gridSize;
     }
 
+    public GameViewModelFactory(int gridSize, Grid savedGrid) {
+        this.gridSize = gridSize;
+        this.savedGrid = savedGrid;
+    }
+
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new GameViewModel(gridSize);
+        if (savedGrid != null) {
+            // On utilise le nouveau constructeur du ViewModel
+            return (T) new GameViewModel(savedGrid);
+        } else {
+            // On utilise ton constructeur classique
+            return (T) new GameViewModel(gridSize);
+        }
     }
 }
