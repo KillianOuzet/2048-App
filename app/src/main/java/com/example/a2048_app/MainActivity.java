@@ -49,6 +49,8 @@ public class MainActivity extends BaseActivity {
                 selectedFragment = new HomeFragment();
             } else if (itemId == R.id.reglages) {
                 selectedFragment = new SettingsFragment();
+            }else if (itemId == R.id.scores){
+                selectedFragment = new ScoresFragment();
             }
 
             if (selectedFragment != null) {

@@ -1,5 +1,7 @@
 package com.example.a2048_app;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -8,6 +10,9 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
@@ -20,9 +25,15 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.a2048_app.DbEntity.Game;
+import com.example.a2048_app.DbEntity.Player;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.card.MaterialCardView;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class GameActivity extends BaseActivity {
 
@@ -49,7 +60,6 @@ public class GameActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_game);
-
         tvScore = findViewById(R.id.tv_score);
         tvBestScore = findViewById(R.id.tv_best_score);
 
@@ -79,15 +89,15 @@ public class GameActivity extends BaseActivity {
 
         if (forceNewGame) {
             prefs.edit().remove(gridStateKey).apply();
-            factory = new GameViewModelFactory(gridSize);
+            factory = new GameViewModelFactory(getApplication(), gridSize);
         } else {
             String savedGridJson = prefs.getString(gridStateKey, null);
 
             if (savedGridJson != null) {
                 Grid savedGrid = gson.fromJson(savedGridJson, Grid.class);
-                factory = new GameViewModelFactory(gridSize, savedGrid);
+                factory = new GameViewModelFactory(getApplication(), gridSize, savedGrid);
             } else {
-                factory = new GameViewModelFactory(gridSize);
+                factory = new GameViewModelFactory(getApplication(),gridSize);
             }
         }
 
@@ -207,28 +217,123 @@ public class GameActivity extends BaseActivity {
 
         int currentScore = grid.getScore();
         tvScore.setText(String.valueOf(currentScore));
+        boolean isNewBest = false;
 
         if (currentScore > bestScore) {
             bestScore = currentScore;
             tvBestScore.setText(String.valueOf(bestScore));
+            isNewBest = true;
 
             android.content.SharedPreferences prefs = getSharedPreferences("2048_settings", MODE_PRIVATE);
             prefs.edit().putInt(bestScoreKey, bestScore).apply();
         }
 
         String gridStateKey = "last_grid_" + gameMode + "_" + gridSize;
-
+      
         if (!grid.isGameOver() && !grid.isWon()) {
-            String json = gson.toJson(grid);
-            prefs.edit().putString(gridStateKey, json).apply();
+              String json = gson.toJson(grid);
+              prefs.edit().putString(gridStateKey, json).apply();
+          } else {
+              prefs.edit().remove(gridStateKey).apply();
+          }
+
+          if (grid.isWon()) {
+            showEndGameBottomSheet(true, currentScore, isNewBest, grid);
+        } else if (grid.isGameOver()) {
+            showEndGameBottomSheet(false, currentScore, isNewBest, grid);
+        }
+      }
+
+    private void showEndGameBottomSheet(boolean isWin, int finalScore, boolean isNewBestRecord, Grid grid) {
+        BottomSheetDialog bottomSheetDialog = new com.google.android.material.bottomsheet.BottomSheetDialog(this);
+
+        View bottomSheetView = getLayoutInflater().inflate(R.layout.bottom_sheet_end_game, null);
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.setCancelable(false);
+
+        Objects.requireNonNull(bottomSheetDialog.getWindow()).setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+        );
+
+        TextView tvEmoji = bottomSheetView.findViewById(R.id.tv_end_emoji);
+        TextView tvTitle = bottomSheetView.findViewById(R.id.tv_end_title);
+        TextView tvScoreVal = bottomSheetView.findViewById(R.id.tv_end_score_val);
+        MaterialCardView cardBadge = bottomSheetView.findViewById(R.id.card_end_badge);
+        TextView tvBadge = bottomSheetView.findViewById(R.id.tv_end_badge);
+        AutoCompleteTextView inputPseudo = bottomSheetView.findViewById(R.id.input_pseudo);
+        MaterialButton btnSave = bottomSheetView.findViewById(R.id.btn_save_score);
+        MaterialButton btnRestart = bottomSheetView.findViewById(R.id.btn_restart_only);
+
+        // --- Récupération des couleurs depuis le thème actuel ---
+        int themePrimary = getThemeColor(R.attr.primaryColor);
+        int themeError = getThemeColor(R.attr.dangerColor);
+
+        model.getAllPlayers().observe(this, players -> {
+            List<String> playerNames = new ArrayList<>();
+            for (Player player : players) {
+                if (!player.getName().equals("Anonyme"))
+                    playerNames.add(player.getName());
+            }
+
+            ArrayAdapter<String> autoAdapter = new ArrayAdapter<>(
+                    this,
+                    android.R.layout.simple_dropdown_item_1line,
+                    playerNames
+            );
+            inputPseudo.setAdapter(autoAdapter);
+        });
+
+        // Si l'utilisateur a gagné on utilise la couleur primaire, sinon la couleur d'erreur (rouge par défaut)
+        int currentColor = isWin ? themePrimary : themeError;
+
+        tvScoreVal.setText(String.format("%,d", finalScore).replace(',', ' ')); // Formatage des milliers
+        tvEmoji.setText(isWin ? "🎉" : "😔");
+        tvTitle.setText(isWin ? "Félicitations !" : "Game Over");
+        tvTitle.setTextColor(currentColor);
+
+        btnSave.setBackgroundColor(currentColor);
+
+        if (isNewBestRecord) {
+            tvBadge.setText("✨ Nouveau meilleur score !");
+            tvBadge.setTextColor(themePrimary);
+            cardBadge.setStrokeColor(themePrimary);
+            // Fond légèrement coloré (30 sur 255 d'opacité)
+            cardBadge.setCardBackgroundColor(androidx.core.graphics.ColorUtils.setAlphaComponent(themePrimary, 30));
         } else {
-            prefs.edit().remove(gridStateKey).apply();
+            int maxTile = grid.getMaxTile();
+            tvBadge.setText("Tuile max : " + maxTile);
+            tvBadge.setTextColor(themeError);
+            cardBadge.setStrokeColor(themeError);
+            cardBadge.setCardBackgroundColor(androidx.core.graphics.ColorUtils.setAlphaComponent(themeError, 30));
         }
 
-        if (grid.isWon() || grid.isGameOver()) {
-            showEndGameBottomSheet();
-        }
-    }
+        btnSave.setOnClickListener(v -> {
+            String pseudo = inputPseudo.getText() != null ? inputPseudo.getText().toString().trim() : "";
+            final String finalPseudo = pseudo;
+
+            if (pseudo.isEmpty()){
+                Game gameToSave = new Game(grid.getScore(), grid.getSize(), grid.getMaxTile(), 10, 1, 1);
+                model.saveGame(gameToSave);
+            }
+            else {
+                model.getPlayerByName(finalPseudo).observe(this, player -> {
+                    int playerId;
+                    if (player != null) {
+                        playerId = player.getId();
+                        Game gameToSave = new Game(
+                                grid.getScore(),
+                                grid.getSize(),
+                                grid.getMaxTile(),
+                                grid.getNbMove(),
+                                playerId,
+                                1
+                        );
+                        model.saveGame(gameToSave);
+                    } else {
+                        model.insertPlayerAndSaveGame(finalPseudo, grid);
+                    }
+                });
+            }
 
     private void showEndGameBottomSheet() {
         BottomSheetDialog dialog = new BottomSheetDialog(this);
