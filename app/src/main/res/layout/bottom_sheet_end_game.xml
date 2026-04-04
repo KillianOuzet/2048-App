@@ -120,7 +120,7 @@
         app:boxStrokeColor="?attr/primaryColor"
         app:hintEnabled="false">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
             android:id="@+id/input_pseudo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -130,6 +130,8 @@
             android:padding="16dp"
             android:textColor="?attr/textColor"
             android:textSize="15sp"
+            android:completionThreshold="1"
+            android:dropDownVerticalOffset="4dp"
             app:fontFamily="@font/outfit_semi_bold" />
     </com.google.android.material.textfield.TextInputLayout>
 

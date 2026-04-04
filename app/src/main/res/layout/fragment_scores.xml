@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="18dp"
+    android:paddingEnd="18dp">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/scores_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentInsetStart="0dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:cardBackgroundColor="?cardColor"
+            app:cardCornerRadius="12dp"
+            app:strokeColor="?borderColor2"
+            app:strokeWidth="1dp">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:contentDescription="Icon trophée"
+                android:src="@drawable/trophy" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Scores"
+                android:textColor="?textColor"
+                android:textSize="@dimen/text_page_title"
+                app:fontFamily="@font/outfit_black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Meilleurs scores locaux"
+                android:textColor="?textColor3"
+                app:fontFamily="@font/outfit_thin" />
+
+        </LinearLayout>
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/scores_toolbar"
+        android:paddingBottom="20dp"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- ─── Onglets modes ─── -->
+            <LinearLayout
+                android:id="@+id/score_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_tabs"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tab_classic"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?attr/primaryColor"
+                    android:gravity="center"
+                    android:padding="11dp"
+                    android:text="Classique"
+                    android:textColor="@android:color/white"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tab_versus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?attr/cardColor2"
+                    android:gravity="center"
+                    android:padding="11dp"
+                    android:text="Multijoueur"
+                    android:textColor="?attr/textColor3"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tab_defi"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?attr/cardColor2"
+                    android:gravity="center"
+                    android:padding="11dp"
+                    android:text="Défi"
+                    android:textColor="?attr/textColor3"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- ─── Label section ─── -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="9dp"
+                android:text="CLASSEMENT LOCAL"
+                android:textColor="?attr/textColor3"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.12" />
+
+            <!-- ─── Liste des scores ─── -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_scores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/bg_card"
+                android:clipToPadding="true"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <!-- ─── Bouton réinitialiser ─── -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_reset_scores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🗑 Réinitialiser le classement"
+                android:textSize="12sp"
+                android:textColor="?attr/dangerColor"
+                app:backgroundTint="?attr/cardColor"
+                app:strokeColor="?attr/dangerColor"
+                app:strokeWidth="1.5dp"
+                app:cornerRadius="14dp"
+                app:icon="@null" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
