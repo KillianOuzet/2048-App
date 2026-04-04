@@ -27,7 +27,7 @@ public class GameViewModelFactory implements ViewModelProvider.Factory {
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (savedGrid != null) {
             // On utilise le nouveau constructeur du ViewModel
-            return (T) new GameViewModel(application, savedGrid);
+            return (T) new GameViewModel(application,savedGrid);
         } else {
             // On utilise le constructeur classique
             return (T) new GameViewModel(application, gridSize);

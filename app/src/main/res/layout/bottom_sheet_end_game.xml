@@ -11,6 +11,87 @@
     android:paddingBottom="36dp">
 
     <View
+        android:layout_width="36dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="22dp"
+        android:background="?attr/borderColor2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_end_emoji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🎉"
+            android:textSize="46sp" />
+
+        <TextView
+            android:id="@+id/tv_end_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:letterSpacing="-0.02"
+            android:text="Félicitations !"
+            android:textColor="?attr/primaryColor"
+            android:textSize="26sp"
+            app:fontFamily="@font/outfit_black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_end_score_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18 432"
+                android:textColor="?attr/textColor"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="pts"
+                android:textColor="?attr/textColor3"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/outfit_semi_bold" />
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_end_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="0dp"
+            app:contentPaddingBottom="4dp"
+            app:contentPaddingLeft="12dp"
+            app:contentPaddingRight="12dp"
+            app:contentPaddingTop="4dp"
+            app:strokeWidth="1dp">
+
+            <TextView
+                android:id="@+id/tv_end_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✨ Nouveau meilleur score !"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+    <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="20dp"
@@ -55,27 +136,24 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_replay"
+        android:id="@+id/btn_save_score"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="14dp"
-        android:text="🔄 Rejouer"
+        android:text="💾 Enregistrer le score"
         android:textSize="16sp"
         app:cornerRadius="16dp"
         app:fontFamily="@font/outfit_bold" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_home"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:id="@+id/btn_restart_only"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:paddingVertical="14dp"
-        android:text="🏠 Accueil"
-        android:textColor="?attr/textColor"
-        android:textSize="16sp"
-        app:cornerRadius="16dp"
-        app:fontFamily="@font/outfit_bold"
-        app:strokeColor="?attr/borderColor2" />
+        android:text="Pas maintenant"
+        android:textColor="?attr/textColor2"
+        app:fontFamily="@font/outfit_semi_bold" />
+
 
 </LinearLayout>

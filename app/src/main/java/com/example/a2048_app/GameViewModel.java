@@ -30,10 +30,11 @@ public class GameViewModel extends AndroidViewModel {
         db = AppDatabase.getInstance(application);
     }
 
-    public GameViewModel(Grid savedGrid) {
+    public GameViewModel(@NonNull Application application, Grid savedGrid) {
+        super(application);
         this.currentGrid = new MutableLiveData<>(savedGrid);
+        db = AppDatabase.getInstance(application);
     }
-
     public LiveData<Grid> getCurrentGrid() {
         return this.currentGrid;
     }

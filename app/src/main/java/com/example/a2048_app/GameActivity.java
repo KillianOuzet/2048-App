@@ -28,6 +28,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.a2048_app.DbEntity.Game;
 import com.example.a2048_app.DbEntity.Player;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.gson.Gson;
 
@@ -335,7 +336,27 @@ public class GameActivity extends BaseActivity {
                 });
             }
 
-    private void showEndGameBottomSheet() {
+            android.widget.Toast.makeText(this, "Score enregistré pour " + pseudo, android.widget.Toast.LENGTH_SHORT).show();
+            bottomSheetDialog.dismiss();
+            model.resetGrid(getIntent().getIntExtra("grid_size", 4));
+        });
+
+        btnRestart.setOnClickListener(v -> {
+            bottomSheetDialog.dismiss();
+            model.resetGrid(getIntent().getIntExtra("grid_size", 4));
+        });
+
+        bottomSheetDialog.show();
+    }
+
+    // Méthode utilitaire pour lire un attribut couleur du thème courant
+    private int getThemeColor(int attrResId) {
+        android.util.TypedValue typedValue = new android.util.TypedValue();
+        getTheme().resolveAttribute(attrResId, typedValue, true);
+        return typedValue.data;
+    }
+
+    /*private void showEndGameBottomSheet() {
         BottomSheetDialog dialog = new BottomSheetDialog(this);
         View view = getLayoutInflater().inflate(R.layout.bottom_sheet_end_game, null);
         dialog.setContentView(view);
@@ -352,5 +373,5 @@ public class GameActivity extends BaseActivity {
         });
 
         dialog.show();
-    }
+    }*/
 }
