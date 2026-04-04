@@ -108,6 +108,9 @@
         <item name="dangerBgColor">@color/light_dangerBgColor</item>
         <item name="dangerBorderColor">@color/light_dangerBorderColor</item>
 
+        <item name="gradiantColorStart">@color/light_gradiantColorStart</item>
+        <item name="gradiantColorEnd">@color/light_gradiantColorEnd</item>
+
     </style>
 
 
@@ -200,6 +203,9 @@
         <item name="dangerBgColor">@color/dark_dangerBgColor</item>
         <item name="dangerBorderColor">@color/dark_dangerBorderColor</item>
 
+        <item name="gradiantColorStart">@color/dark_gradiantColorStart</item>
+        <item name="gradiantColorEnd">@color/dark_gradiantColorEnd</item>
+
     </style>
 
 
@@ -291,6 +297,9 @@
         <item name="dangerColor">@color/color_dangerColor</item>
         <item name="dangerBgColor">@color/color_dangerBgColor</item>
         <item name="dangerBorderColor">@color/color_dangerBorderColor</item>
+
+        <item name="gradiantColorStart">@color/color_gradiantColorStart</item>
+        <item name="gradiantColorEnd">@color/color_gradiantColorEnd</item>
 
     </style>
 

@@ -69,4 +69,7 @@
     <color name="dark_dangerBgColor">#0FE06060</color>
     <color name="dark_dangerBorderColor">#2EE06060</color>
 
+    <color name="dark_gradiantColorStart">#B06018</color>
+    <color name="dark_gradiantColorEnd">#804010</color>
+
 </resources>

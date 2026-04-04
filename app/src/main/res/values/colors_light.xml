@@ -69,4 +69,7 @@
     <color name="light_dangerBgColor">#0FE05050</color>   <!-- rgba(224,80,80,0.06) -->
     <color name="light_dangerBorderColor">#2EE05050</color> <!-- rgba(224,80,80,0.18) -->
 
+    <color name="light_gradiantColorStart">#E8944A</color>
+    <color name="light_gradiantColorEnd">#C87030</color>
+
 </resources>
