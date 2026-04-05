@@ -7,6 +7,8 @@ public class Grid {
     private final int size;
     private Tile[][] grid;
     private int score;
+    private int nbMove;
+
 
     public Grid(int size) {
         this.size = size;
@@ -28,6 +30,9 @@ public class Grid {
     public int getScore() {
         return score;
     }
+    public int getNbMove() {
+        return nbMove;
+    }
 
     // SLIDES --------------------------------------------------------------------------------------
     public boolean rightSlide() {
@@ -40,7 +45,10 @@ public class Grid {
                 }
             }
         }
-        if (moved) generateTile();
+        if (moved){
+            generateTile();
+            nbMove++;
+        }
         return moved;
     }
 
@@ -54,7 +62,10 @@ public class Grid {
                 }
             }
         }
-        if (moved) generateTile();
+        if (moved){
+            generateTile();
+            nbMove++;
+        }
         return moved;
     }
 
@@ -68,7 +79,10 @@ public class Grid {
                 }
             }
         }
-        if (moved) generateTile();
+        if (moved){
+            generateTile();
+            nbMove++;
+        }
         return moved;
     }
 
@@ -82,7 +96,10 @@ public class Grid {
                 }
             }
         }
-        if (moved) generateTile();
+        if (moved){
+            generateTile();
+            nbMove++;
+        }
         return moved;
     }
 
