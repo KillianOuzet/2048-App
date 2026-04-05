@@ -71,4 +71,6 @@
     <attr name="gradiantColorStart" format="color" />
     <attr name="gradiantColorEnd" format="color" />
 
+    <attr name="borderColorTuilesObj" format="color"/>
+
 </resources>

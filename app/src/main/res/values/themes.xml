@@ -111,6 +111,7 @@
         <item name="gradiantColorStart">@color/light_gradiantColorStart</item>
         <item name="gradiantColorEnd">@color/light_gradiantColorEnd</item>
 
+        <item name="borderColorTuilesObj">@color/light_borderColorTuilesObj</item>
     </style>
 
 
@@ -205,6 +206,8 @@
 
         <item name="gradiantColorStart">@color/dark_gradiantColorStart</item>
         <item name="gradiantColorEnd">@color/dark_gradiantColorEnd</item>
+
+        <item name="borderColorTuilesObj">@color/dark_borderColorTuilesObj</item>
 
     </style>
 
@@ -301,6 +304,7 @@
         <item name="gradiantColorStart">@color/color_gradiantColorStart</item>
         <item name="gradiantColorEnd">@color/color_gradiantColorEnd</item>
 
+        <item name="borderColorTuilesObj">@color/color_borderColorTuilesObj</item>
     </style>
 
 </resources>

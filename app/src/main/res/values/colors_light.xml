@@ -72,4 +72,6 @@
     <color name="light_gradiantColorStart">#E8944A</color>
     <color name="light_gradiantColorEnd">#C87030</color>
 
+    <color name="light_borderColorTuilesObj">#40E8944A</color>
+
 </resources>

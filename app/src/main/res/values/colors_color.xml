@@ -72,4 +72,6 @@
     <color name="color_gradiantColorStart">#7C3AED</color>
     <color name="color_gradiantColorEnd">#FF6B9D</color>
 
+    <color name="color_borderColorTuilesObj">#40FF6B9D</color>
+
 </resources>
