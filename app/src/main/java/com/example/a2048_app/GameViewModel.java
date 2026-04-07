@@ -9,14 +9,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.a2048_app.DbEntity.Game;
-import com.example.a2048_app.DbEntity.GameWithPlayer;
 import com.example.a2048_app.DbEntity.Player;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class GameViewModel extends AndroidViewModel {
     private MutableLiveData<Grid> currentGrid;
@@ -35,6 +33,7 @@ public class GameViewModel extends AndroidViewModel {
         this.currentGrid = new MutableLiveData<>(savedGrid);
         db = AppDatabase.getInstance(application);
     }
+
     public LiveData<Grid> getCurrentGrid() {
         return this.currentGrid;
     }
@@ -43,24 +42,36 @@ public class GameViewModel extends AndroidViewModel {
         currentGrid.setValue(new Grid(size));
     }
 
-    public void rightSlide() {
-        Objects.requireNonNull(this.currentGrid.getValue()).rightSlide();
-        this.currentGrid.setValue(this.currentGrid.getValue());
+    public boolean rightSlide() {
+        boolean hasMoved = Objects.requireNonNull(this.currentGrid.getValue()).rightSlide();
+        if (hasMoved) {
+            this.currentGrid.setValue(this.currentGrid.getValue());
+        }
+        return hasMoved;
     }
 
-    public void leftSlide() {
-        Objects.requireNonNull(this.currentGrid.getValue()).leftSlide();
-        this.currentGrid.setValue(this.currentGrid.getValue());
+    public boolean leftSlide() {
+        boolean hasMoved = Objects.requireNonNull(this.currentGrid.getValue()).leftSlide();
+        if (hasMoved) {
+            this.currentGrid.setValue(this.currentGrid.getValue());
+        }
+        return hasMoved;
     }
 
-    public void upSlide() {
-        Objects.requireNonNull(this.currentGrid.getValue()).upSlide();
-        this.currentGrid.setValue(this.currentGrid.getValue());
+    public boolean upSlide() {
+        boolean hasMoved = Objects.requireNonNull(this.currentGrid.getValue()).upSlide();
+        if (hasMoved) {
+            this.currentGrid.setValue(this.currentGrid.getValue());
+        }
+        return hasMoved;
     }
 
-    public void downSlide() {
-        Objects.requireNonNull(this.currentGrid.getValue()).downSlide();
-        this.currentGrid.setValue(this.currentGrid.getValue());
+    public boolean downSlide() {
+        boolean hasMoved = Objects.requireNonNull(this.currentGrid.getValue()).downSlide();
+        if (hasMoved) {
+            this.currentGrid.setValue(this.currentGrid.getValue());
+        }
+        return hasMoved;
     }
 
     // BD méthodes
@@ -91,14 +102,7 @@ public class GameViewModel extends AndroidViewModel {
             long newPlayerId = db.playerDao().insert(new Player(name));
             Log.d("GameActivity", "Joueur créé avec l'ID : " + newPlayerId);
 
-            Game game = new Game(
-                    grid.getScore(),
-                    grid.getSize(),
-                    grid.getMaxTile(),
-                    grid.getNbMove(),
-                    (int) newPlayerId,
-                    1
-            );
+            Game game = new Game(grid.getScore(), grid.getSize(), grid.getMaxTile(), grid.getNbMove(), (int) newPlayerId, 1);
             long gameId = db.gameDao().insert(game);
             Log.d("GameActivity", "Partie sauvegardée avec l'ID : " + gameId);
         });

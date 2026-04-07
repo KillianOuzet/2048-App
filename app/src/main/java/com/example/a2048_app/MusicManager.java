@@ -37,7 +37,7 @@ public class MusicManager implements DefaultLifecycleObserver {
             player = new ExoPlayer.Builder(context.getApplicationContext()).build();
 
             // Chemin vers votre fichier dans res/raw
-            String uri = "android.resource://" + context.getPackageName() + "/" + R.raw.musique_fond;
+            String uri = "android.resource://" + context.getPackageName() + "/" + R.raw.starlight;
             MediaItem mediaItem = MediaItem.fromUri(uri);
 
             player.setMediaItem(mediaItem);
