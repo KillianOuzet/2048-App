@@ -68,6 +68,134 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="?cardColor"
+                app:cardCornerRadius="12dp"
+                app:strokeColor="?borderColor2"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/toggleGroupMode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="15dp"
+                        app:checkedButton="@+id/toggleButtonClassique"
+                        app:selectionRequired="true"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/toggleButtonClassique"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Classique"
+                            android:textSize="@dimen/text_btn_theme"
+                            app:cornerRadius="12dp"
+                            app:fontFamily="@font/outfit_bold" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/toggleButtonMultijoueur"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Multjoueur"
+                            android:textSize="@dimen/text_btn_theme"
+                            app:cornerRadius="12dp"
+                            app:fontFamily="@font/outfit_bold" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/toggleButtonDefi"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Défi"
+                            android:textSize="@dimen/text_btn_theme"
+                            app:cornerRadius="12dp"
+                            app:fontFamily="@font/outfit_bold" />
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="1sp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        app:dividerColor="?borderColor2" />
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/toggleGroupTaille"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="5dp"
+                        app:checkedButton="@+id/toggleButton4x4"
+                        app:selectionRequired="true"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/toggleButton3x3"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="3×3"
+                            android:textSize="@dimen/text_btn_theme"
+                            app:cornerRadius="12dp"
+                            app:fontFamily="@font/outfit_bold" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/toggleButton4x4"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="4×4"
+                            android:textSize="@dimen/text_btn_theme"
+                            app:cornerRadius="12dp"
+                            app:fontFamily="@font/outfit_bold" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/toggleButton5x5"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="5×5"
+                            android:textSize="@dimen/text_btn_theme"
+                            app:cornerRadius="12dp"
+                            app:fontFamily="@font/outfit_bold" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/toggleButton6x6"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="6×6"
+                            android:textSize="@dimen/text_btn_theme"
+                            app:cornerRadius="12dp"
+                            app:fontFamily="@font/outfit_bold" />
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:cardCornerRadius="12dp">
 
                 <LinearLayout
@@ -86,6 +214,7 @@
                         android:textAllCaps="true" />
 
                     <TextView
+                        android:id="@+id/textViewBestScore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -95,10 +224,11 @@
                         app:fontFamily="@font/outfit_bold" />
 
                     <TextView
+                        android:id="@+id/textViewGridSizeBestScore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Atteint le 28 Fév 2026 · Grille 4×4" />
+                        android:text="Grille 4×4" />
 
                 </LinearLayout>
 
@@ -134,6 +264,7 @@
                             android:src="@drawable/video_game" />
 
                         <TextView
+                            android:id="@+id/textViewNbGamePlayed"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
@@ -179,6 +310,7 @@
                             android:src="@drawable/trophy" />
 
                         <TextView
+                            android:id="@+id/textViewNbVictories"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
@@ -231,11 +363,11 @@
                             android:src="@drawable/x" />
 
                         <TextView
+                            android:id="@+id/textViewNbDefeats"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
                             android:includeFontPadding="false"
-
                             android:text="35"
                             android:textColor="?attr/primaryColor"
                             android:textSize="22dp"
@@ -276,6 +408,7 @@
                             android:src="@drawable/img1234" />
 
                         <TextView
+                            android:id="@+id/textViewNbCoups"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
@@ -347,9 +480,10 @@
                                 app:fontFamily="@font/outfit_semi_bold" />
 
                             <TextView
+                                android:id="@+id/tv_pct_victoires"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="25%"
+                                android:text="0%"
                                 android:textAlignment="textEnd"
                                 android:textColor="?primaryColor"
                                 android:textSize="@dimen/text_settings_title" />
@@ -357,11 +491,12 @@
                         </LinearLayout>
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/progress_victoires"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:max="100"
-                            android:progress="25"
+                            android:progress="0"
                             app:indicatorColor="?attr/accentColor"
                             app:trackColor="?attr/cardColor3"
                             app:trackCornerRadius="8dp"
@@ -397,9 +532,10 @@
                                 app:fontFamily="@font/outfit_semi_bold" />
 
                             <TextView
+                                android:id="@+id/tv_pct_1024"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="48%"
+                                android:text="0%"
                                 android:textAlignment="textEnd"
                                 android:textColor="?primaryColor"
                                 android:textSize="@dimen/text_settings_title" />
@@ -407,11 +543,12 @@
                         </LinearLayout>
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/progress_1024"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:max="100"
-                            android:progress="48"
+                            android:progress="0"
                             app:indicatorColor="?attr/primaryColor"
                             app:trackColor="?attr/cardColor3"
                             app:trackCornerRadius="8dp"
@@ -447,9 +584,10 @@
                                 app:fontFamily="@font/outfit_semi_bold" />
 
                             <TextView
+                                android:id="@+id/tv_pct_512"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="74%"
+                                android:text="0%"
                                 android:textAlignment="textEnd"
                                 android:textColor="?primaryColor"
                                 android:textSize="@dimen/text_settings_title" />
@@ -457,11 +595,12 @@
                         </LinearLayout>
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/progress_512"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:max="100"
-                            android:progress="74"
+                            android:progress="0"
                             app:indicatorColor="?attr/primaryColor"
                             app:trackColor="?attr/cardColor3"
                             app:trackCornerRadius="8dp"
@@ -498,9 +637,10 @@
                                 app:fontFamily="@font/outfit_semi_bold" />
 
                             <TextView
+                                android:id="@+id/tv_pct_defaites"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="75%"
+                                android:text="0%"
                                 android:textAlignment="textEnd"
                                 android:textColor="?primaryColor"
                                 android:textSize="@dimen/text_settings_title" />
@@ -508,11 +648,12 @@
                         </LinearLayout>
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/progress_defaites"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:max="100"
-                            android:progress="75"
+                            android:progress="0"
                             app:indicatorColor="?attr/dangerColor"
                             app:trackColor="?attr/cardColor3"
                             app:trackCornerRadius="8dp"
@@ -538,46 +679,11 @@
                 app:fontFamily="@font/outfit_bold" />
 
             <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupMilestones"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:chipSpacingHorizontal="8dp"
                 app:chipSpacingVertical="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_milestone_ok"
-                    android:paddingHorizontal="14dp"
-                    android:paddingVertical="6dp"
-                    android:text="2"
-                    android:textColor="#C86A20"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:fontFamily="@font/outfit_bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_milestone_ok"
-                    android:paddingHorizontal="14dp"
-                    android:paddingVertical="6dp"
-                    android:text="4"
-                    android:textColor="#C86A20"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:fontFamily="@font/outfit_bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_milestone_no"
-                    android:paddingHorizontal="14dp"
-                    android:paddingVertical="6dp"
-                    android:text="4096"
-                    android:textColor="#7A6A55"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:fontFamily="@font/outfit_bold" />
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -609,6 +715,7 @@
                     android:padding="16dp">
 
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardSharePreviewBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
@@ -625,20 +732,22 @@
                             android:padding="14dp">
 
                             <TextView
+                                android:id="@+id/textViewShareScore"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:includeFontPadding="false"
-                                android:text="69 612"
+                                android:text="0"
                                 android:textColor="?attr/primaryColor"
                                 android:textSize="32sp"
                                 android:textStyle="bold"
                                 app:fontFamily="@font/outfit_bold" />
 
                             <TextView
+                                android:id="@+id/textViewShareSubtitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:text="pts · Tuile max : 2048 · 47 parties"
+                                android:text="pts · Tuile max : 0 · 0 parties"
                                 android:textColor="?textColor3"
                                 android:textSize="11sp"
                                 app:fontFamily="@font/outfit_regular" />
@@ -653,6 +762,7 @@
                         android:orientation="horizontal">
 
                         <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/btnShareScreenshot"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="4dp"
@@ -676,6 +786,7 @@
                         </com.google.android.material.card.MaterialCardView>
 
                         <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/btnShareGeneral"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
@@ -706,6 +817,7 @@
                         android:orientation="horizontal">
 
                         <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/btnShareMessage"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="4dp"
@@ -729,6 +841,7 @@
                         </com.google.android.material.card.MaterialCardView>
 
                         <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/btnShareCopy"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
