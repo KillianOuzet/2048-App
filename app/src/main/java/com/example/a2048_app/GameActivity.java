@@ -1,7 +1,5 @@
 package com.example.a2048_app;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -54,6 +52,8 @@ public class GameActivity extends BaseActivity {
 
     int gridSize;
 
+    private SoundManager soundManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         this.prefs = getSharedPreferences("2048_settings", Context.MODE_PRIVATE);
@@ -98,7 +98,7 @@ public class GameActivity extends BaseActivity {
                 Grid savedGrid = gson.fromJson(savedGridJson, Grid.class);
                 factory = new GameViewModelFactory(getApplication(), gridSize, savedGrid);
             } else {
-                factory = new GameViewModelFactory(getApplication(),gridSize);
+                factory = new GameViewModelFactory(getApplication(), gridSize);
             }
         }
 
@@ -117,25 +117,65 @@ public class GameActivity extends BaseActivity {
         findViewById(R.id.grid_parent).setOnTouchListener(new OnSwipeTouchListener(this) {
             @Override
             public void onSwipeRight() {
-                model.rightSlide();
+                // 1. On retient le score avant le coup
+                int oldScore = Objects.requireNonNull(model.getCurrentGrid().getValue()).getScore();
+
+                if (model.rightSlide()) {
+                    // 2. Le coup est valide : on joue le son de mouvement (whoosh)
+                    soundManager.playMoveSound();
+
+                    // 3. On vérifie si le score a augmenté
+                    int newScore = model.getCurrentGrid().getValue().getScore();
+                    if (newScore > oldScore) {
+                        // Il y a eu une fusion !
+                        soundManager.playMergeSound();
+                    }
+                }
             }
 
             @Override
             public void onSwipeLeft() {
-                model.leftSlide();
+                int oldScore = Objects.requireNonNull(model.getCurrentGrid().getValue()).getScore();
+                if (model.leftSlide()) {
+                    soundManager.playMoveSound();
+                    if (model.getCurrentGrid().getValue().getScore() > oldScore) {
+                        soundManager.playMergeSound();
+                    }
+                }
             }
 
             @Override
             public void onSwipeTop() {
-                model.upSlide();
+                int oldScore = Objects.requireNonNull(model.getCurrentGrid().getValue()).getScore();
+                if (model.upSlide()) {
+                    soundManager.playMoveSound();
+                    if (model.getCurrentGrid().getValue().getScore() > oldScore) {
+                        soundManager.playMergeSound();
+                    }
+                }
             }
 
             @Override
             public void onSwipeBottom() {
-                model.downSlide();
+                int oldScore = Objects.requireNonNull(model.getCurrentGrid().getValue()).getScore();
+                if (model.downSlide()) {
+                    soundManager.playMoveSound();
+                    if (model.getCurrentGrid().getValue().getScore() > oldScore) {
+                        soundManager.playMergeSound();
+                    }
+                }
             }
         });
 
+        soundManager = new SoundManager(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (soundManager != null) {
+            soundManager.release();
+        }
     }
 
     private void buildGrid(int size) {
@@ -230,20 +270,20 @@ public class GameActivity extends BaseActivity {
         }
 
         String gridStateKey = "last_grid_" + gameMode + "_" + gridSize;
-      
-        if (!grid.isGameOver() && !grid.isWon()) {
-              String json = gson.toJson(grid);
-              prefs.edit().putString(gridStateKey, json).apply();
-          } else {
-              prefs.edit().remove(gridStateKey).apply();
-          }
 
-          if (grid.isWon()) {
+        if (!grid.isGameOver() && !grid.isWon()) {
+            String json = gson.toJson(grid);
+            prefs.edit().putString(gridStateKey, json).apply();
+        } else {
+            prefs.edit().remove(gridStateKey).apply();
+        }
+
+        if (grid.isWon()) {
             showEndGameBottomSheet(true, currentScore, isNewBest, grid);
         } else if (grid.isGameOver()) {
             showEndGameBottomSheet(false, currentScore, isNewBest, grid);
         }
-      }
+    }
 
     private void showEndGameBottomSheet(boolean isWin, int finalScore, boolean isNewBestRecord, Grid grid) {
         BottomSheetDialog bottomSheetDialog = new com.google.android.material.bottomsheet.BottomSheetDialog(this);
@@ -252,9 +292,7 @@ public class GameActivity extends BaseActivity {
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.setCancelable(false);
 
-        Objects.requireNonNull(bottomSheetDialog.getWindow()).setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
-        );
+        Objects.requireNonNull(bottomSheetDialog.getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         TextView tvEmoji = bottomSheetView.findViewById(R.id.tv_end_emoji);
         TextView tvTitle = bottomSheetView.findViewById(R.id.tv_end_title);
@@ -265,29 +303,22 @@ public class GameActivity extends BaseActivity {
         MaterialButton btnSave = bottomSheetView.findViewById(R.id.btn_save_score);
         MaterialButton btnRestart = bottomSheetView.findViewById(R.id.btn_restart_only);
 
-        // --- Récupération des couleurs depuis le thème actuel ---
         int themePrimary = getThemeColor(R.attr.primaryColor);
         int themeError = getThemeColor(R.attr.dangerColor);
 
         model.getAllPlayers().observe(this, players -> {
             List<String> playerNames = new ArrayList<>();
             for (Player player : players) {
-                if (!player.getName().equals("Anonyme"))
-                    playerNames.add(player.getName());
+                if (!player.getName().equals("Anonyme")) playerNames.add(player.getName());
             }
 
-            ArrayAdapter<String> autoAdapter = new ArrayAdapter<>(
-                    this,
-                    android.R.layout.simple_dropdown_item_1line,
-                    playerNames
-            );
+            ArrayAdapter<String> autoAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, playerNames);
             inputPseudo.setAdapter(autoAdapter);
         });
 
-        // Si l'utilisateur a gagné on utilise la couleur primaire, sinon la couleur d'erreur (rouge par défaut)
         int currentColor = isWin ? themePrimary : themeError;
 
-        tvScoreVal.setText(String.format("%,d", finalScore).replace(',', ' ')); // Formatage des milliers
+        tvScoreVal.setText(String.format("%,d", finalScore).replace(',', ' '));
         tvEmoji.setText(isWin ? "🎉" : "😔");
         tvTitle.setText(isWin ? "Félicitations !" : "Game Over");
         tvTitle.setTextColor(currentColor);
@@ -298,7 +329,6 @@ public class GameActivity extends BaseActivity {
             tvBadge.setText("✨ Nouveau meilleur score !");
             tvBadge.setTextColor(themePrimary);
             cardBadge.setStrokeColor(themePrimary);
-            // Fond légèrement coloré (30 sur 255 d'opacité)
             cardBadge.setCardBackgroundColor(androidx.core.graphics.ColorUtils.setAlphaComponent(themePrimary, 30));
         } else {
             int maxTile = grid.getMaxTile();
@@ -312,23 +342,15 @@ public class GameActivity extends BaseActivity {
             String pseudo = inputPseudo.getText() != null ? inputPseudo.getText().toString().trim() : "";
             final String finalPseudo = pseudo;
 
-            if (pseudo.isEmpty()){
+            if (pseudo.isEmpty()) {
                 Game gameToSave = new Game(grid.getScore(), grid.getSize(), grid.getMaxTile(), 10, 1, 1);
                 model.saveGame(gameToSave);
-            }
-            else {
+            } else {
                 model.getPlayerByName(finalPseudo).observe(this, player -> {
                     int playerId;
                     if (player != null) {
                         playerId = player.getId();
-                        Game gameToSave = new Game(
-                                grid.getScore(),
-                                grid.getSize(),
-                                grid.getMaxTile(),
-                                grid.getNbMove(),
-                                playerId,
-                                1
-                        );
+                        Game gameToSave = new Game(grid.getScore(), grid.getSize(), grid.getMaxTile(), grid.getNbMove(), playerId, 1);
                         model.saveGame(gameToSave);
                     } else {
                         model.insertPlayerAndSaveGame(finalPseudo, grid);
@@ -349,29 +371,9 @@ public class GameActivity extends BaseActivity {
         bottomSheetDialog.show();
     }
 
-    // Méthode utilitaire pour lire un attribut couleur du thème courant
     private int getThemeColor(int attrResId) {
         android.util.TypedValue typedValue = new android.util.TypedValue();
         getTheme().resolveAttribute(attrResId, typedValue, true);
         return typedValue.data;
     }
-
-    /*private void showEndGameBottomSheet() {
-        BottomSheetDialog dialog = new BottomSheetDialog(this);
-        View view = getLayoutInflater().inflate(R.layout.bottom_sheet_end_game, null);
-        dialog.setContentView(view);
-        dialog.setCancelable(false);
-
-        view.findViewById(R.id.btn_replay).setOnClickListener(v -> {
-            dialog.dismiss();
-            model.resetGrid(gridSize);
-        });
-
-        view.findViewById(R.id.btn_home).setOnClickListener(v -> {
-            dialog.dismiss();
-            finish();
-        });
-
-        dialog.show();
-    }*/
 }
