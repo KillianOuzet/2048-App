@@ -81,11 +81,12 @@
                             app:fontFamily="@font/outfit_bold" />
 
                         <TextView
+                            android:id="@+id/text_current_score"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="3 840"
-                            android:textColor="?textColor"
+                            android:text="0"
+                            android:textColor="?attr/primaryColor"
                             app:fontFamily="@font/outfit_bold" />
 
                     </LinearLayout>
@@ -155,10 +156,11 @@
                             app:fontFamily="@font/outfit_bold" />
 
                         <TextView
+                            android:id="@+id/text_games_played"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="47"
+                            android:text="0"
                             android:textColor="?textColor"
                             app:fontFamily="@font/outfit_bold" />
 

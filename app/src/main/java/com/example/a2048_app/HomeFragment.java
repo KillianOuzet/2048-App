@@ -16,7 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 
+import com.example.a2048_app.DbDao.GameDao;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.ChipGroup;
@@ -37,9 +39,17 @@ public class HomeFragment extends Fragment {
 
     private TextView textBestScore;
 
+    private TextView textCurrentScore;
+
     Supplier<Integer> getSelectedSize;
 
     ChipGroup chipGroupGridSize;
+
+    private TextView textGamesPlayed;
+
+    private GameDao gameDao;
+
+    private LiveData<Integer> gamesPlayedLiveData;
 
     public HomeFragment() {
         super(R.layout.fragment_home);
@@ -58,6 +68,11 @@ public class HomeFragment extends Fragment {
         btnResume = view.findViewById(R.id.btn_resume);
 
         textBestScore = view.findViewById(R.id.text_best_score);
+        textCurrentScore = view.findViewById(R.id.text_current_score);
+        textGamesPlayed = view.findViewById(R.id.text_games_played);
+
+        AppDatabase db = AppDatabase.getInstance(requireContext());
+        gameDao = db.gameDao();
 
         MaterialButton buttonNewGame = view.findViewById(R.id.newGame_button);
         MaterialCardView classic_card = view.findViewById(R.id.card_classic_mode);
@@ -76,11 +91,16 @@ public class HomeFragment extends Fragment {
             @Override
             public void onCheckedChanged(@NonNull ChipGroup chipGroup, @NonNull List<Integer> list) {
                 String lastMode = prefs.getString("last_played_mode", "classique");
-                String bestScoreKey = "best_score_" + lastMode + "_" + getSelectedSize.get();
-                int bestScore = prefs.getInt(bestScoreKey, 0);
-                textBestScore.setText(String.format("%,d", bestScore).replace(',', ' '));
+                int size = getSelectedSize.get();
 
-                prefs.edit().putInt("current_grid_size", getSelectedSize.get()).apply();
+                // Appel de la méthode combinée
+                updateScoresDisplay(lastMode, size);
+
+                prefs.edit().putInt("current_grid_size", size).apply();
+
+                // Optionnel mais recommandé : Mettre aussi à jour l'encart "Partie sauvegardée"
+                // quand tu changes de taille de grille
+                loadSavedGamePreview(lastMode, size);
             }
         });
 
@@ -106,14 +126,10 @@ public class HomeFragment extends Fragment {
         super.onResume();
 
         String lastMode = prefs.getString("last_played_mode", "classique");
-        int lastSize = prefs.getInt("last_played_size", 4);
-
-        String bestScoreKey = "best_score_" + lastMode + "_" + getSelectedSize.get();
-        int bestScore = prefs.getInt(bestScoreKey, 0);
-
-        textBestScore.setText(String.format("%,d", bestScore).replace(',', ' '));
-
         int savedGridSize = prefs.getInt("current_grid_size", 4);
+
+        // Appel de la méthode combinée
+        updateScoresDisplay(lastMode, savedGridSize);
 
         int chipIdToCheck;
         if (savedGridSize == 3) {
@@ -128,7 +144,49 @@ public class HomeFragment extends Fragment {
 
         chipGroupGridSize.check(chipIdToCheck);
 
-        loadSavedGamePreview(lastMode, lastSize);
+        loadSavedGamePreview(lastMode, savedGridSize);
+    }
+
+    /**
+     * Met à jour l'affichage du Meilleur Score, Score Actuel et Nombre de parties
+     */
+    private void updateScoresDisplay(String mode, int size) {
+        // 1. Meilleur score (via SharedPreferences)
+        String bestScoreKey = "best_score_" + mode + "_" + size;
+        int bestScore = prefs.getInt(bestScoreKey, 0);
+        textBestScore.setText(String.format("%,d", bestScore).replace(',', ' '));
+
+        // 2. Score actuel (via sauvegarde de grille)
+        String gridStateKey = "last_grid_" + mode + "_" + size;
+        String savedGridJson = prefs.getString(gridStateKey, null);
+        int currentScore = 0;
+
+        if (savedGridJson != null) {
+            Grid savedGrid = gson.fromJson(savedGridJson, Grid.class);
+            if (savedGrid != null) {
+                currentScore = savedGrid.getScore();
+            }
+        }
+        textCurrentScore.setText(String.format("%,d", currentScore).replace(',', ' '));
+
+        // 3. Nombre de parties jouées (via Base de données Room)
+
+        // Nettoyage de l'ancien observateur s'il existe
+        if (gamesPlayedLiveData != null) {
+            gamesPlayedLiveData.removeObservers(getViewLifecycleOwner());
+        }
+
+        // Conversion du texte en ID pour la BDD
+        int modeId = 1;
+        if (mode.equals("multijoueur")) modeId = 2;
+        else if (mode.equals("defi")) modeId = 3;
+
+        // Requête et observation
+        gamesPlayedLiveData = gameDao.getNbGamePlayedByGridSizeAndMode(size, modeId);
+        gamesPlayedLiveData.observe(getViewLifecycleOwner(), count -> {
+            int nbParties = (count != null) ? count : 0;
+            textGamesPlayed.setText(String.valueOf(nbParties));
+        });
     }
 
     private void loadSavedGamePreview(String gameMode, int gridSize) {
@@ -166,7 +224,12 @@ public class HomeFragment extends Fragment {
         Tile[][] tiles = grid.getGrid();
         Context context = requireContext();
 
-        int margin = (int) dpToPx(1.5f);
+        // 1. Calcul du facteur d'échelle (Référence = Grille 4x4)
+        // 3x3 -> x1.33 (Plus grand) | 4x4 -> x1.0 | 6x6 -> x0.66 (Plus petit)
+        float scaleFactor = 4.0f / size;
+
+        // 2. On réduit proportionnellement les marges (avec un minimum de 1 pixel)
+        int margin = Math.max(1, (int) dpToPx(1.5f * scaleFactor));
 
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
@@ -192,20 +255,23 @@ public class HomeFragment extends Fragment {
                 if (value > 0) {
                     cell.setText(String.valueOf(value));
 
+                    // 3. On multiplie TOUTES les tailles de texte par le facteur d'échelle
                     if (value >= 1000) {
-                        cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 5f);
+                        cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 5f * scaleFactor);
                     } else if (value >= 100) {
-                        cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 6.5f);
+                        cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 6.5f * scaleFactor);
                     } else if (value >= 10) {
-                        cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8.5f);
+                        cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8.5f * scaleFactor);
                     } else {
-                        cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10f);
+                        cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10f * scaleFactor);
                     }
                 }
 
                 GradientDrawable bg = new GradientDrawable();
                 bg.setShape(GradientDrawable.RECTANGLE);
-                bg.setCornerRadius(dpToPx(4));
+
+                // 4. On réduit aussi le rayon d'arrondi pour qu'il soit harmonieux sur 6x6
+                bg.setCornerRadius(dpToPx(4f * scaleFactor));
                 bg.setColor(TileTheme.getBackgroundColor(context, value));
 
                 cell.setTextColor(TileTheme.getTextColor(context, value));
