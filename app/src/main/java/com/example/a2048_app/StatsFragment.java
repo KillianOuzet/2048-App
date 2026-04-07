@@ -1,12 +1,23 @@
 package com.example.a2048_app;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,48 +28,34 @@ import com.example.a2048_app.DbDao.GameDao;
 import com.example.a2048_app.DbEntity.Game;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.progressindicator.LinearProgressIndicator;
-
 import com.google.android.material.color.MaterialColors;
-
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.ContentValues;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.widget.Toast;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.io.OutputStream;
 
 public class StatsFragment extends Fragment {
 
     private GameDao gameDao;
+
+    // --- Vues de visibilité ---
+    private LinearLayout layoutStatsContent;
+    private LinearLayout layoutEmptyState;
+
     private TextView textViewBestScore;
     private TextView textViewGridSizeBestScore;
 
     private TextView textViewNbGamePlayed;
-
     private TextView textViewNbVictories;
-
     private TextView textViewNbDefeats;
-
     private TextView textViewNbCoups;
 
     private int currentModeId = 1;
     private int currentTaille = 4;
 
     private LiveData<Game> currentScoreLiveData;
-
     private LiveData<Integer> nbGamePlayedLiveData;
-
     private LiveData<Integer> nbVictoriesLiveData;
-
     private LiveData<Integer> nbDefeatsLiveData;
-
     private LiveData<Integer> nbCoupsLiveData;
 
     private TextView tvPctVictoires, tvPct1024, tvPct512, tvPctDefaites;
@@ -86,6 +83,10 @@ public class StatsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_stats, container, false);
 
+        // Vues pour la gestion de l'état vide
+        layoutStatsContent = view.findViewById(R.id.layout_stats_content);
+        layoutEmptyState = view.findViewById(R.id.layout_empty_state);
+
         MaterialButtonToggleGroup modeToggleGroup = view.findViewById(R.id.toggleGroupMode);
         MaterialButtonToggleGroup tailleToggleGroup = view.findViewById(R.id.toggleGroupTaille);
         textViewBestScore = view.findViewById(R.id.textViewBestScore);
@@ -94,23 +95,19 @@ public class StatsFragment extends Fragment {
         textViewNbVictories = view.findViewById(R.id.textViewNbVictories);
         textViewNbDefeats = view.findViewById(R.id.textViewNbDefeats);
         textViewNbCoups = view.findViewById(R.id.textViewNbCoups);
-        chipGroupMilestones = view.findViewById(R.id.chipGroupMilestones);
-        textViewShareScore = view.findViewById(R.id.textViewShareScore);
-        textViewShareSubtitle = view.findViewById(R.id.textViewShareSubtitle);
 
         tvPctVictoires = view.findViewById(R.id.tv_pct_victoires);
         progressVictoires = view.findViewById(R.id.progress_victoires);
-
         tvPct1024 = view.findViewById(R.id.tv_pct_1024);
         progress1024 = view.findViewById(R.id.progress_1024);
-
         tvPct512 = view.findViewById(R.id.tv_pct_512);
         progress512 = view.findViewById(R.id.progress_512);
-
         tvPctDefaites = view.findViewById(R.id.tv_pct_defaites);
         progressDefaites = view.findViewById(R.id.progress_defaites);
 
         chipGroupMilestones = view.findViewById(R.id.chipGroupMilestones);
+        textViewShareScore = view.findViewById(R.id.textViewShareScore);
+        textViewShareSubtitle = view.findViewById(R.id.textViewShareSubtitle);
 
         SharedPreferences prefs = requireActivity().getSharedPreferences("2048_settings", Context.MODE_PRIVATE);
 
@@ -154,6 +151,7 @@ public class StatsFragment extends Fragment {
             }
         });
 
+        // --- GESTION DU PARTAGE ---
         View cardSharePreviewBox = view.findViewById(R.id.cardSharePreviewBox);
         View btnShareScreenshot = view.findViewById(R.id.btnShareScreenshot);
         View btnShareGeneral = view.findViewById(R.id.btnShareGeneral);
@@ -210,7 +208,7 @@ public class StatsFragment extends Fragment {
                 OutputStream out = requireContext().getContentResolver().openOutputStream(uri);
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
                 out.close();
-                Toast.makeText(requireContext(), "Capture sauvegardée dans la galerie 📸", Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "Capture sauvegardée dans la galerie \uD83D\uDCF8", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -229,9 +227,7 @@ public class StatsFragment extends Fragment {
         if (nbCoupsLiveData != null) nbCoupsLiveData.removeObservers(getViewLifecycleOwner());
         if (nb1024LiveData != null) nb1024LiveData.removeObservers(getViewLifecycleOwner());
         if (nb512LiveData != null) nb512LiveData.removeObservers(getViewLifecycleOwner());
-        if (maxTileLiveData != null) {
-            maxTileLiveData.removeObservers(getViewLifecycleOwner());
-        }
+        if (maxTileLiveData != null) maxTileLiveData.removeObservers(getViewLifecycleOwner());
 
         String modeName = "Classique";
         if (currentModeId == 2) modeName = "Multijoueur";
@@ -261,9 +257,19 @@ public class StatsFragment extends Fragment {
             refreshSharePreview();
         });
 
+        // C'est ici qu'on gère l'affichage vide / plein !
         nbGamePlayedLiveData.observe(getViewLifecycleOwner(), nb -> {
             countTotalGames = (nb != null) ? nb : 0;
             textViewNbGamePlayed.setText(String.valueOf(countTotalGames));
+
+            if (countTotalGames == 0) {
+                layoutStatsContent.setVisibility(View.GONE);
+                layoutEmptyState.setVisibility(View.VISIBLE);
+            } else {
+                layoutStatsContent.setVisibility(View.VISIBLE);
+                layoutEmptyState.setVisibility(View.GONE);
+            }
+
             refreshProgressBars();
             refreshSharePreview();
         });
@@ -299,7 +305,6 @@ public class StatsFragment extends Fragment {
             populateMilestones(currentMaxTile);
             refreshSharePreview();
         });
-
     }
 
     private void refreshSharePreview() {
@@ -329,11 +334,9 @@ public class StatsFragment extends Fragment {
 
             if (i <= highestTile) {
                 tv.setBackgroundResource(R.drawable.bg_milestone_ok);
-                // On applique la couleur récupérée dynamiquement
                 tv.setTextColor(colorOk);
             } else {
                 tv.setBackgroundResource(R.drawable.bg_milestone_no);
-                // On applique la couleur récupérée dynamiquement
                 tv.setTextColor(colorNo);
             }
 
@@ -348,13 +351,12 @@ public class StatsFragment extends Fragment {
         updateSingleProgressBar(progressDefaites, tvPctDefaites, countDefaites);
     }
 
-    private void updateSingleProgressBar(com.google.android.material.progressindicator.LinearProgressIndicator progressIndicator, TextView textView, int count) {
+    private void updateSingleProgressBar(LinearProgressIndicator progressIndicator, TextView textView, int count) {
         if (countTotalGames == 0) {
             progressIndicator.setProgress(0);
             textView.setText("0%");
         } else {
             int percentage = (count * 100) / countTotalGames;
-
             progressIndicator.setProgress(percentage);
             textView.setText(percentage + "%");
         }

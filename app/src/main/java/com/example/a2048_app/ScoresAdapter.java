@@ -34,8 +34,7 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoreViewH
     @NonNull
     @Override
     public ScoreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_score_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_score_row, parent, false);
         return new ScoreViewHolder(view);
     }
 
@@ -47,10 +46,18 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoreViewH
         int rank = position + 1;
 
         switch (rank) {
-            case 1: holder.tvRank.setText("🥇"); break;
-            case 2: holder.tvRank.setText("🥈"); break;
-            case 3: holder.tvRank.setText("🥉"); break;
-            default: holder.tvRank.setText(String.valueOf(rank)); break;
+            case 1:
+                holder.tvRank.setText("🥇");
+                break;
+            case 2:
+                holder.tvRank.setText("🥈");
+                break;
+            case 3:
+                holder.tvRank.setText("🥉");
+                break;
+            default:
+                holder.tvRank.setText(String.valueOf(rank));
+                break;
         }
 
         String[] avatars = {"😎", "🎮", "🦊", "🐉", "⭐", "🔥", "💎", "🚀", "🎯", "👑"};
@@ -65,18 +72,20 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoreViewH
     }
 
     @Override
-    public int getItemCount() { return games.size(); }
+    public int getItemCount() {
+        return games.size();
+    }
 
     static class ScoreViewHolder extends RecyclerView.ViewHolder {
         TextView tvRank, tvAvatar, tvPlayerName, tvGameInfo, tvScore, tvBiggestTile;
 
         public ScoreViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvRank        = itemView.findViewById(R.id.tv_rank);
-            tvAvatar      = itemView.findViewById(R.id.tv_avatar);
-            tvPlayerName  = itemView.findViewById(R.id.tv_player_name);
-            tvGameInfo    = itemView.findViewById(R.id.tv_game_info);
-            tvScore       = itemView.findViewById(R.id.tv_score);
+            tvRank = itemView.findViewById(R.id.tv_rank);
+            tvAvatar = itemView.findViewById(R.id.tv_avatar);
+            tvPlayerName = itemView.findViewById(R.id.tv_player_name);
+            tvGameInfo = itemView.findViewById(R.id.tv_game_info);
+            tvScore = itemView.findViewById(R.id.tv_score);
             tvBiggestTile = itemView.findViewById(R.id.tv_biggest_tile);
         }
     }

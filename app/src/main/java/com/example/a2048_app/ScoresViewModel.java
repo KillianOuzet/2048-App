@@ -21,8 +21,8 @@ public class ScoresViewModel extends AndroidViewModel {
         db = AppDatabase.getInstance(application);
     }
 
-    public LiveData<List<GameWithPlayer>> getLeaderboard() {
-        return db.gameDao().getLeaderboardWithPlayers(10);
+    public LiveData<List<GameWithPlayer>> getLeaderboard(int gridSize, int modeId) {
+        return db.gameDao().getLeaderboardWithPlayers(gridSize, modeId, 10);
     }
 
     public void deleteAll() {

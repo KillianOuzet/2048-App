@@ -58,76 +58,154 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/scores_toolbar"
-        android:paddingBottom="20dp"
-        android:clipToPadding="false">
+        android:layout_marginTop="15dp"
+        android:clipToPadding="false"
+        android:paddingBottom="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- ─── Onglets modes ─── -->
-            <LinearLayout
-                android:id="@+id/score_tabs"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_tabs"
-                android:orientation="horizontal">
+                app:cardBackgroundColor="?cardColor"
+                app:cardCornerRadius="12dp"
+                app:strokeColor="?borderColor2"
+                app:strokeWidth="1dp">
 
-                <TextView
-                    android:id="@+id/tab_classic"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="?attr/primaryColor"
-                    android:gravity="center"
-                    android:padding="11dp"
-                    android:text="Classique"
-                    android:textColor="@android:color/white"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tab_versus"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="?attr/cardColor2"
-                    android:gravity="center"
-                    android:padding="11dp"
-                    android:text="Multijoueur"
-                    android:textColor="?attr/textColor3"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/toggleGroupModeScores"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="15dp"
+                        app:checkedButton="@+id/toggleButtonClassiqueScores"
+                        app:selectionRequired="true"
+                        app:singleSelection="true">
 
-                <TextView
-                    android:id="@+id/tab_defi"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="?attr/cardColor2"
-                    android:gravity="center"
-                    android:padding="11dp"
-                    android:text="Défi"
-                    android:textColor="?attr/textColor3"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/toggleButtonClassiqueScores"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Classique"
+                            android:textSize="@dimen/text_btn_theme"
+                            app:cornerRadius="12dp"
+                            app:fontFamily="@font/outfit_bold" />
 
-            </LinearLayout>
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/toggleButtonMultijoueurScores"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Multijoueur"
+                            android:textSize="@dimen/text_btn_theme"
+                            app:cornerRadius="12dp"
+                            app:fontFamily="@font/outfit_bold" />
 
-            <!-- ─── Label section ─── -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/toggleButtonDefiScores"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Défi"
+                            android:textSize="@dimen/text_btn_theme"
+                            app:cornerRadius="12dp"
+                            app:fontFamily="@font/outfit_bold" />
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="1sp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        app:dividerColor="?borderColor2" />
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/toggleGroupTailleScores"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="5dp"
+                        app:checkedButton="@+id/toggleButton4x4Scores"
+                        app:selectionRequired="true"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/toggleButton3x3Scores"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="3×3"
+                            android:textSize="@dimen/text_btn_theme"
+                            app:cornerRadius="12dp"
+                            app:fontFamily="@font/outfit_bold" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/toggleButton4x4Scores"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="4×4"
+                            android:textSize="@dimen/text_btn_theme"
+                            app:cornerRadius="12dp"
+                            app:fontFamily="@font/outfit_bold" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/toggleButton5x5Scores"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="5×5"
+                            android:textSize="@dimen/text_btn_theme"
+                            app:cornerRadius="12dp"
+                            app:fontFamily="@font/outfit_bold" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/toggleButton6x6Scores"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="6×6"
+                            android:textSize="@dimen/text_btn_theme"
+                            app:cornerRadius="12dp"
+                            app:fontFamily="@font/outfit_bold" />
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
             <TextView
+                android:id="@+id/textviewClassmentsTitre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="9dp"
+                android:letterSpacing="0.12"
                 android:text="CLASSEMENT LOCAL"
                 android:textColor="?attr/textColor3"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:letterSpacing="0.12" />
+                android:visibility="gone" />
 
-            <!-- ─── Liste des scores ─── -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_scores"
                 android:layout_width="match_parent"
@@ -136,21 +214,56 @@
                 android:background="@drawable/bg_card"
                 android:clipToPadding="true"
                 android:nestedScrollingEnabled="false"
+                android:visibility="gone"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-            <!-- ─── Bouton réinitialiser ─── -->
+            <LinearLayout
+                android:id="@+id/layout_empty_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="44dp"
+                android:layout_marginBottom="30dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🤷"
+                    android:textSize="48sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Aucun score pour le moment"
+                    android:textColor="?attr/textColor3"
+                    android:textSize="16sp"
+                    app:fontFamily="@font/outfit_regular" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lancez une partie pour apparaître ici !"
+                    android:textColor="?attr/textColor3"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/outfit_thin" />
+            </LinearLayout>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_reset_scores"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="🗑 Réinitialiser le classement"
-                android:textSize="12sp"
                 android:textColor="?attr/dangerColor"
+                android:textSize="12sp"
+                android:visibility="gone"
                 app:backgroundTint="?attr/cardColor"
-                app:strokeColor="?attr/dangerColor"
-                app:strokeWidth="1.5dp"
                 app:cornerRadius="14dp"
-                app:icon="@null" />
+                app:icon="@null"
+                app:strokeColor="?attr/dangerColor"
+                app:strokeWidth="1.5dp" />
 
         </LinearLayout>
 

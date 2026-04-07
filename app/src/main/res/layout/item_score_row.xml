@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:gravity="center_vertical"
+    android:orientation="horizontal"
     android:padding="12dp">
 
     <!-- Rang -->
@@ -24,8 +24,8 @@
         android:layout_width="34dp"
         android:layout_height="34dp"
         android:layout_marginStart="10dp"
-        app:cardCornerRadius="10dp"
         app:cardBackgroundColor="?attr/cardColor2"
+        app:cardCornerRadius="10dp"
         app:cardElevation="0dp">
 
         <TextView
@@ -42,8 +42,8 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_marginStart="12dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
@@ -59,10 +59,10 @@
             android:id="@+id/tv_game_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
             android:text="Tuile max : 512 · 200 coups"
             android:textColor="?attr/textColor3"
-            android:textSize="10sp"
-            android:layout_marginTop="1dp" />
+            android:textSize="10sp" />
 
     </LinearLayout>
 
@@ -70,8 +70,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="end">
+        android:gravity="end"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_score"
@@ -87,10 +87,10 @@
             android:id="@+id/tv_biggest_tile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
             android:text="512"
             android:textColor="?attr/textColor3"
-            android:textSize="10sp"
-            android:layout_marginTop="1dp" />
+            android:textSize="10sp" />
 
     </LinearLayout>
 

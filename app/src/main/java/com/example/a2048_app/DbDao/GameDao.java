@@ -55,8 +55,8 @@ public interface GameDao {
 
     // Classement général
     @Transaction
-    @Query("SELECT * FROM Game ORDER BY score DESC LIMIT :limit")
-    LiveData<List<GameWithPlayer>> getLeaderboardWithPlayers(int limit);
+    @Query("SELECT * FROM Game WHERE gridSize = :gridSize AND modeId = :modeId ORDER BY score DESC LIMIT :limit")
+    LiveData<List<GameWithPlayer>> getLeaderboardWithPlayers(int gridSize, int modeId, int limit);
 
     @Query("SELECT COUNT(*) FROM GAME WHERE gridSize = :gridSize AND modeId = :modeId")
     LiveData<Integer> getNbGamePlayedByGridSizeAndMode(int gridSize, int modeId);
