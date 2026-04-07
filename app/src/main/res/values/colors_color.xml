@@ -69,4 +69,9 @@
     <color name="color_dangerBgColor">#0FFF4466</color>
     <color name="color_dangerBorderColor">#2EFF4466</color>
 
+    <color name="color_gradiantColorStart">#7C3AED</color>
+    <color name="color_gradiantColorEnd">#FF6B9D</color>
+
+    <color name="color_borderColorTuilesObj">#40FF6B9D</color>
+
 </resources>
