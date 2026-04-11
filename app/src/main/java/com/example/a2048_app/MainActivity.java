@@ -49,7 +49,7 @@ public class MainActivity extends BaseActivity {
                 selectedFragment = new HomeFragment();
             } else if (itemId == R.id.reglages) {
                 selectedFragment = new SettingsFragment();
-            }else if (itemId == R.id.scores){
+            } else if (itemId == R.id.scores) {
                 selectedFragment = new ScoresFragment();
             } else if (itemId == R.id.stats) {
                 selectedFragment = new StatsFragment();
