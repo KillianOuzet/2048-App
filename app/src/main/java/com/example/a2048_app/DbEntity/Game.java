@@ -9,37 +9,31 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(
-        tableName = "Game",
-        foreignKeys = {
-                @ForeignKey(
-                        entity = Player.class,
-                        parentColumns = "id",
-                        childColumns = "playerId",
-                        onDelete = ForeignKey.CASCADE
-                ),
-                @ForeignKey(
-                        entity = Mode.class,
-                        parentColumns = "id",
-                        childColumns = "modeId",
-                        onDelete = ForeignKey.CASCADE
-                )
-        },
-        indices = {
-                @Index("playerId"),
-                @Index("modeId")
-        }
-)
+/**
+ * Entité Room représentant une session de jeu terminée.
+ * Cette table est liée aux tables Player et Mode via des clés étrangères (Foreign Keys).
+ */
+@Entity(tableName = "Game", foreignKeys = {
+        // Si un joueur est supprimé de la base, toutes ses parties associées
+        // seront automatiquement supprimées grâce à "onDelete = ForeignKey.CASCADE".
+        @ForeignKey(entity = Player.class, parentColumns = "id", childColumns = "playerId", onDelete = ForeignKey.CASCADE), @ForeignKey(entity = Mode.class, parentColumns = "id", childColumns = "modeId", onDelete = ForeignKey.CASCADE)},
+        // L'ajout d'index sur les clés étrangères améliore considérablement
+        // les performances des requêtes de recherche (ex: trouver toutes les parties d'un joueur).
+        indices = {@Index("playerId"), @Index("modeId")})
 public class Game implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
+
     private int score;
-    private int gridSize;
-    private int biggestTile;
-    private int nbMove;
-    private int playerId;
-    private int modeId;
+    private final int gridSize;
+
+    // Essentiel pour déterminer si la partie est une victoire (>= 2048) ou débloquer des succès
+    private final int biggestTile;
+
+    private final int nbMove;
+    private final int playerId;
+    private final int modeId;
 
     public Game(int score, int gridSize, int biggestTile, int nbMove, int playerId, int modeId) {
         this.score = score;
@@ -49,6 +43,13 @@ public class Game implements Parcelable {
         this.playerId = playerId;
         this.modeId = modeId;
     }
+
+    // =========================================================================================
+    // IMPLÉMENTATION DE PARCELABLE
+    // =========================================================================================
+    // L'interface Parcelable permet de "sérialiser" cet objet de manière très performante
+    // sous Android, afin de pouvoir passer un objet Game complet d'une Activity/Fragment à un autre
+    // via des Intents ou des Bundles.
 
     protected Game(Parcel in) {
         id = in.readInt();
@@ -72,13 +73,40 @@ public class Game implements Parcelable {
         }
     };
 
-    // Getters
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeInt(score);
+        dest.writeInt(gridSize);
+        dest.writeInt(biggestTile);
+        dest.writeInt(nbMove);
+        dest.writeInt(playerId);
+        dest.writeInt(modeId);
+    }
+
+    // =========================================================================================
+    // GETTERS & SETTERS
+    // =========================================================================================
+
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getScore() {
         return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public int getGridSize() {
@@ -99,50 +127,5 @@ public class Game implements Parcelable {
 
     public int getModeId() {
         return modeId;
-    }
-
-    // Setters
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public void setGridSize(int gridSize) {
-        this.gridSize = gridSize;
-    }
-
-    public void setBiggestTile(int biggestTile) {
-        this.biggestTile = biggestTile;
-    }
-
-    public void setNbMove(int nbMove) {
-        this.nbMove = nbMove;
-    }
-
-    public void setPlayerId(int playerId) {
-        this.playerId = playerId;
-    }
-
-    public void setModeId(int modeId) {
-        this.modeId = modeId;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeInt(score);
-        dest.writeInt(gridSize);
-        dest.writeInt(biggestTile);
-        dest.writeInt(nbMove);
-        dest.writeInt(playerId);
-        dest.writeInt(modeId);
     }
 }

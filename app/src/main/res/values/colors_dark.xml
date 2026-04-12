@@ -1,39 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- ═══════════════════════════════════════ -->
-    <!--           THÈME SOMBRE (Dark)           -->
-    <!-- ═══════════════════════════════════════ -->
-
-    <!-- Arrière-plans -->
     <color name="dark_bg">#111009</color>
     <color name="dark_bg2">#181610</color>
     <color name="dark_bg3">#201E18</color>
 
-    <!-- Cartes -->
     <color name="dark_card">#1E1C14</color>
     <color name="dark_card2">#262418</color>
     <color name="dark_card3">#2E2C22</color>
 
-    <!-- Couleurs principales -->
     <color name="dark_primary">#F0A050</color>
     <color name="dark_primary2">#D08030</color>
     <color name="dark_accent">#50C090</color>
     <color name="dark_danger">#E06060</color>
 
-    <!-- Textes -->
     <color name="dark_text">#F0E8D8</color>
     <color name="dark_text2">#9A8E78</color>
     <color name="dark_text3">#5A5040</color>
 
-    <!-- Bordures -->
-    <color name="dark_border">#0EFFFFFF</color>      <!-- rgba(255,255,255,0.055) -->
-    <color name="dark_border2">#1AFFFFFF</color>     <!-- rgba(255,255,255,0.10)  -->
+    <color name="dark_border">#0EFFFFFF</color>
+    <color name="dark_border2">#1AFFFFFF</color>
 
-    <!-- Grille de jeu -->
     <color name="dark_tile_bg">#2A2618</color>
 
-    <!-- Tuiles par valeur -->
     <color name="dark_tile_2">#3A3628</color>
     <color name="dark_tile_4">#4A4030</color>
     <color name="dark_tile_8">#B06020</color>
@@ -46,23 +34,18 @@
     <color name="dark_tile_1024">#C08828</color>
     <color name="dark_tile_2048">#F0D820</color>
 
-    <!-- Texte tuiles -->
-    <color name="dark_tile_text_dark">#F0E8D8</color>   <!-- tuiles basses valeurs -->
-    <color name="dark_tile_text_light">#F9F6F2</color>  <!-- tuiles hautes valeurs -->
+    <color name="dark_tile_text_dark">#F0E8D8</color>
+    <color name="dark_tile_text_light">#F9F6F2</color>
 
-    <!-- Badge / notification -->
-    <color name="dark_badge_bg">#1AF0A050</color>    <!-- rgba(240,160,80,0.10) -->
+    <color name="dark_badge_bg">#1AF0A050</color>
     <color name="dark_badge_text">#F0A050</color>
 
-    <!-- Toggle (interrupteur) -->
     <color name="dark_toggle_off">#3A3828</color>
-    <color name="dark_toggle_on">#5dbf8a</color>  <!-- = accent -->
+    <color name="dark_toggle_on">#5dbf8a</color>
 
-    <!-- Navigation bas de page -->
     <color name="dark_nav">#1A1810</color>
-    <color name="dark_nav_active">#1AF0A050</color>  <!-- rgba(240,160,80,0.10) -->
+    <color name="dark_nav_active">#1AF0A050</color>
 
-    <!-- Scrollbar -->
     <color name="dark_scrollbar">#2A2820</color>
 
     <color name="dark_dangerColor">#E06060</color>

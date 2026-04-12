@@ -22,11 +22,17 @@ import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.util.List;
 
+/**
+ * Fragment gérant l'affichage du tableau des scores (Leaderboard).
+ * Il permet à l'utilisateur de filtrer les résultats par taille de grille et par mode
+ * tout en offrant une gestion visuelle propre en cas d'absence de données.
+ */
 public class ScoresFragment extends Fragment {
 
     private ScoresViewModel viewModel;
     private ScoresAdapter adapter;
 
+    // État actuel des filtres (mémorisé pour les requêtes)
     private int currentModeId = 1;
     private int currentTaille = 4;
     private LiveData<List<GameWithPlayer>> currentLeaderboardLiveData;
@@ -34,7 +40,6 @@ public class ScoresFragment extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayout layoutEmptyState;
     private View btnResetScores;
-
     private TextView textviewClassmentsTitre;
 
     public ScoresFragment() {
@@ -45,58 +50,68 @@ public class ScoresFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Initialisation du ViewModel pour la logique de récupération des scores
         viewModel = new ViewModelProvider(this).get(ScoresViewModel.class);
 
+        // Liaison des vues
         recyclerView = view.findViewById(R.id.recycler_scores);
         layoutEmptyState = view.findViewById(R.id.layout_empty_state);
         btnResetScores = view.findViewById(R.id.btn_reset_scores);
         textviewClassmentsTitre = view.findViewById(R.id.textviewClassmentsTitre);
 
+        // Configuration du RecyclerView et de son Adaptateur
         adapter = new ScoresAdapter(requireContext());
         recyclerView.setAdapter(adapter);
 
+        /**
+         * Ajout d'une décoration personnalisée au RecyclerView.
+         * Plutôt que d'utiliser un simple divider XML, on dessine manuellement
+         * une ligne de séparation entre chaque item pour un rendu visuel plus fin.
+         */
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void onDraw(@NonNull Canvas canvas, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
                 int childCount = parent.getChildCount();
+                Paint paint = new Paint();
+                paint.setColor(getThemeColor(R.attr.borderColor));
+
+                // On dessine une ligne sous chaque élément sauf le dernier
                 for (int i = 0; i < childCount - 1; i++) {
                     View child = parent.getChildAt(i);
                     int top = child.getBottom();
-                    int bottom = top + 2;
-
-                    Paint paint = new Paint();
-                    paint.setColor(getThemeColor(R.attr.borderColor));
+                    int bottom = top + 2; // Épaisseur de 2 pixels
                     canvas.drawRect(0, top, parent.getWidth(), bottom, paint);
                 }
             }
         });
 
-        btnResetScores.setOnClickListener(v -> {
-            viewModel.deleteAll();
-        });
+        // Action de suppression totale des scores (avec confirmation implicite)
+        btnResetScores.setOnClickListener(v -> viewModel.deleteAll());
 
         setupFilters(view);
     }
 
+    /**
+     * Initialise et gère les groupes de boutons de filtrage (Modes et Tailles).
+     * Les préférences de l'utilisateur sont sauvegardées dans les SharedPreferences
+     * pour conserver les filtres actifs lors de la prochaine ouverture.
+     */
     private void setupFilters(View view) {
         MaterialButtonToggleGroup modeToggleGroup = view.findViewById(R.id.toggleGroupModeScores);
         MaterialButtonToggleGroup tailleToggleGroup = view.findViewById(R.id.toggleGroupTailleScores);
 
         SharedPreferences prefs = requireActivity().getSharedPreferences("2048_settings", Context.MODE_PRIVATE);
+
+        // Chargement des derniers filtres utilisés
         currentModeId = prefs.getInt("scores_page_mode_selected", 1);
         currentTaille = prefs.getInt("scores_page_taille_selected", 4);
 
-        if (currentModeId == 1) modeToggleGroup.check(R.id.toggleButtonClassiqueScores);
-        else if (currentModeId == 2) modeToggleGroup.check(R.id.toggleButtonMultijoueurScores);
-        else if (currentModeId == 3) modeToggleGroup.check(R.id.toggleButtonDefiScores);
-
-        if (currentTaille == 3) tailleToggleGroup.check(R.id.toggleButton3x3Scores);
-        else if (currentTaille == 4) tailleToggleGroup.check(R.id.toggleButton4x4Scores);
-        else if (currentTaille == 5) tailleToggleGroup.check(R.id.toggleButton5x5Scores);
-        else if (currentTaille == 6) tailleToggleGroup.check(R.id.toggleButton6x6Scores);
+        // Mise à jour visuelle des boutons Toggle au démarrage
+        updateToggleSelection(modeToggleGroup, tailleToggleGroup);
 
         updateLeaderboardDisplay();
 
+        // Écouteur pour le changement de Mode
         modeToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
             if (isChecked) {
                 if (checkedId == R.id.toggleButtonClassiqueScores) currentModeId = 1;
@@ -108,6 +123,7 @@ public class ScoresFragment extends Fragment {
             }
         });
 
+        // Écouteur pour le changement de Taille de grille
         tailleToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
             if (isChecked) {
                 if (checkedId == R.id.toggleButton3x3Scores) currentTaille = 3;
@@ -121,7 +137,26 @@ public class ScoresFragment extends Fragment {
         });
     }
 
+    /**
+     * Synchronise les boutons de sélection (Toggle) avec l'état actuel.
+     */
+    private void updateToggleSelection(MaterialButtonToggleGroup modeGroup, MaterialButtonToggleGroup tailleGroup) {
+        if (currentModeId == 1) modeGroup.check(R.id.toggleButtonClassiqueScores);
+        else if (currentModeId == 2) modeGroup.check(R.id.toggleButtonMultijoueurScores);
+        else if (currentModeId == 3) modeGroup.check(R.id.toggleButtonDefiScores);
+
+        if (currentTaille == 3) tailleGroup.check(R.id.toggleButton3x3Scores);
+        else if (currentTaille == 5) tailleGroup.check(R.id.toggleButton5x5Scores);
+        else if (currentTaille == 6) tailleGroup.check(R.id.toggleButton6x6Scores);
+        else tailleGroup.check(R.id.toggleButton4x4Scores);
+    }
+
+    /**
+     * Interroge le ViewModel pour obtenir le LiveData correspondant aux filtres choisis.
+     * Gère également l'affichage du "Empty State" si aucun score n'est trouvé.
+     */
     private void updateLeaderboardDisplay() {
+        // On nettoie l'ancien observateur s'il existe pour éviter les fuites ou les doubles appels
         if (currentLeaderboardLiveData != null) {
             currentLeaderboardLiveData.removeObservers(getViewLifecycleOwner());
         }
@@ -129,22 +164,21 @@ public class ScoresFragment extends Fragment {
         currentLeaderboardLiveData = viewModel.getLeaderboard(currentTaille, currentModeId);
 
         currentLeaderboardLiveData.observe(getViewLifecycleOwner(), games -> {
-            if (games == null || games.isEmpty()) {
-                recyclerView.setVisibility(View.GONE);
-                layoutEmptyState.setVisibility(View.VISIBLE);
-                btnResetScores.setVisibility(View.GONE); // On cache le bouton reset car il n'y a rien à supprimer
-                textviewClassmentsTitre.setVisibility(View.GONE);
-            } else {
-                recyclerView.setVisibility(View.VISIBLE);
-                layoutEmptyState.setVisibility(View.GONE);
-                btnResetScores.setVisibility(View.VISIBLE);
-                textviewClassmentsTitre.setVisibility(View.VISIBLE);
-            }
+            // Gestion de l'UI si la liste est vide (Empty State)
+            boolean isEmpty = (games == null || games.isEmpty());
+
+            recyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+            layoutEmptyState.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+            btnResetScores.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+            textviewClassmentsTitre.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
 
             adapter.setGames(games);
         });
     }
 
+    /**
+     * Utilitaire pour récupérer une couleur de thème dynamiquement.
+     */
     private int getThemeColor(int attr) {
         TypedValue typedValue = new TypedValue();
         requireContext().getTheme().resolveAttribute(attr, typedValue, true);

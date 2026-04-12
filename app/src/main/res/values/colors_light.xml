@@ -1,39 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- ═══════════════════════════════════════ -->
-    <!--           THÈME CLAIR (Light)           -->
-    <!-- ═══════════════════════════════════════ -->
-
-    <!-- Arrière-plans -->
     <color name="light_bg">#FAF6F0</color>
     <color name="light_bg2">#F0EAE0</color>
     <color name="light_bg3">#E6DDD0</color>
 
-    <!-- Cartes -->
     <color name="light_card">#FFFFFF</color>
     <color name="light_card2">#F5F0E8</color>
     <color name="light_card3">#EDE8DF</color>
 
-    <!-- Couleurs principales -->
     <color name="light_primary">#E8944A</color>
     <color name="light_primary2">#C87030</color>
     <color name="light_accent">#5DBF8A</color>
     <color name="light_danger">#E05050</color>
 
-    <!-- Textes -->
     <color name="light_text">#2D2418</color>
     <color name="light_text2">#7A6A55</color>
     <color name="light_text3">#B09A80</color>
 
-    <!-- Bordures -->
-    <color name="light_border">#12000000</color>      <!-- rgba(0,0,0,0.07) -->
-    <color name="light_border2">#21000000</color>     <!-- rgba(0,0,0,0.13) -->
+    <color name="light_border">#12000000</color>
+    <color name="light_border2">#21000000</color>
 
-    <!-- Grille de jeu -->
     <color name="light_tile_bg">#EDE0D0</color>
 
-    <!-- Tuiles par valeur -->
     <color name="light_tile_2">#EEE4DA</color>
     <color name="light_tile_4">#EDE0C8</color>
     <color name="light_tile_8">#F2B179</color>
@@ -46,28 +34,23 @@
     <color name="light_tile_1024">#EDC22E</color>
     <color name="light_tile_2048">#EFC010</color>
 
-    <!-- Texte tuiles (clair = petites valeurs, foncé = grandes valeurs) -->
-    <color name="light_tile_text_dark">#776E65</color>   <!-- tuiles 2 et 4 -->
-    <color name="light_tile_text_light">#F9F6F2</color>  <!-- tuiles 8+ -->
+    <color name="light_tile_text_dark">#776E65</color>
+    <color name="light_tile_text_light">#F9F6F2</color>
 
-    <!-- Badge / notification -->
     <color name="light_badge_bg">#FFF3E8</color>
     <color name="light_badge_text">#C86A20</color>
 
-    <!-- Toggle (interrupteur) -->
     <color name="light_toggle_off">#D0C8BC</color>
-    <color name="light_toggle_on">#5DBF8A</color>  <!-- = accent -->
+    <color name="light_toggle_on">#5DBF8A</color>
 
-    <!-- Navigation bas de page -->
     <color name="light_nav">#FFFFFF</color>
     <color name="light_nav_active">#FFF3E8</color>
 
-    <!-- Scrollbar -->
     <color name="light_scrollbar">#DDDDDD</color>
 
     <color name="light_dangerColor">#E05050</color>
-    <color name="light_dangerBgColor">#0FE05050</color>   <!-- rgba(224,80,80,0.06) -->
-    <color name="light_dangerBorderColor">#2EE05050</color> <!-- rgba(224,80,80,0.18) -->
+    <color name="light_dangerBgColor">#0FE05050</color>
+    <color name="light_dangerBorderColor">#2EE05050</color>
 
     <color name="light_gradiantColorStart">#E8944A</color>
     <color name="light_gradiantColorEnd">#C87030</color>

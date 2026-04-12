@@ -161,9 +161,9 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/grid_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/grid_parent"
         android:layout_below="@id/score_bar">
 
         <GridLayout

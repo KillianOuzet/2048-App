@@ -23,31 +23,35 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.ChipGroup;
 import com.google.gson.Gson;
 
-import java.util.List;
 import java.util.function.Supplier;
 
+/**
+ * Fragment gérant l'écran d'accueil de l'application.
+ * Il permet de configurer la taille de la grille, de consulter ses records
+ * et de reprendre une partie sauvegardée grâce à une prévisualisation miniature.
+ */
 public class HomeFragment extends Fragment {
 
     private SharedPreferences prefs;
     private Gson gson;
 
+    // Éléments de la carte "Reprendre la partie"
     private MaterialCardView cardSavedGame;
     private GridLayout miniGridLayout;
     private TextView tvSavedDetails;
     private MaterialButton btnResume;
 
+    // Affichage des scores et statistiques
     private TextView textBestScore;
-
     private TextView textCurrentScore;
-
-    Supplier<Integer> getSelectedSize;
-
-    ChipGroup chipGroupGridSize;
-
     private TextView textGamesPlayed;
 
-    private GameDao gameDao;
+    // Composants de sélection
+    private ChipGroup chipGroupGridSize;
+    private Supplier<Integer> getSelectedSize;
 
+    // Accès aux données
+    private GameDao gameDao;
     private LiveData<Integer> gamesPlayedLiveData;
 
     public HomeFragment() {
@@ -58,54 +62,51 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Initialisation des outils de persistance
         prefs = requireActivity().getSharedPreferences("2048_settings", Context.MODE_PRIVATE);
         gson = new Gson();
+        gameDao = AppDatabase.getInstance(requireContext()).gameDao();
 
+        // Liaison des vues
         cardSavedGame = view.findViewById(R.id.card_saved_game);
         miniGridLayout = view.findViewById(R.id.mini_grid_layout);
         tvSavedDetails = view.findViewById(R.id.tv_saved_details);
         btnResume = view.findViewById(R.id.btn_resume);
-
         textBestScore = view.findViewById(R.id.text_best_score);
         textCurrentScore = view.findViewById(R.id.text_current_score);
         textGamesPlayed = view.findViewById(R.id.text_games_played);
-
-        AppDatabase db = AppDatabase.getInstance(requireContext());
-        gameDao = db.gameDao();
-
-        MaterialButton buttonNewGame = view.findViewById(R.id.newGame_button);
-        MaterialCardView classic_card = view.findViewById(R.id.card_classic_mode);
-
         chipGroupGridSize = view.findViewById(R.id.chipGroupGridSize);
 
+        // Définition de la logique de récupération de la taille via un Supplier
         getSelectedSize = () -> {
             int checkedId = chipGroupGridSize.getCheckedChipId();
             if (checkedId == R.id.chip_3x3) return 3;
             if (checkedId == R.id.chip_5x5) return 5;
             if (checkedId == R.id.chip_6x6) return 6;
-            return 4;
+            return 4; // Valeur par défaut
         };
 
+        // Écouteur sur le changement de taille de grille
         chipGroupGridSize.setOnCheckedStateChangeListener((chipGroup, list) -> {
             String lastMode = prefs.getString("last_played_mode", "classique");
             int size = getSelectedSize.get();
 
             updateScoresDisplay(lastMode, size);
-
             prefs.edit().putInt("current_grid_size", size).apply();
-
             loadSavedGamePreview(lastMode, size);
         });
 
-        buttonNewGame.setOnClickListener(v -> {
+        // Bouton "Nouvelle Partie"
+        view.findViewById(R.id.newGame_button).setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), GameActivity.class);
             intent.putExtra("grid_size", getSelectedSize.get());
             intent.putExtra("game_mode", "classique");
-            intent.putExtra("force_new_game", true);
+            intent.putExtra("force_new_game", true); // On ignore la sauvegarde existante
             startActivity(intent);
         });
 
-        classic_card.setOnClickListener(v -> {
+        // Mode Classique (Raccourci 4x4)
+        view.findViewById(R.id.card_classic_mode).setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), GameActivity.class);
             intent.putExtra("grid_size", 4);
             intent.putExtra("game_mode", "classique");
@@ -113,82 +114,77 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
 
-        MaterialCardView tuto_card = view.findViewById(R.id.card_tuto_mode);
-
-        tuto_card.setOnClickListener(v -> {
-            Intent intent = new Intent(requireActivity(), TutorialActivity.class);
-            startActivity(intent);
+        // Accès au tutoriel
+        view.findViewById(R.id.card_tuto_mode).setOnClickListener(v -> {
+            startActivity(new Intent(requireActivity(), TutorialActivity.class));
         });
     }
 
+    /**
+     * Rafraîchit les informations à chaque fois que l'utilisateur revient sur l'écran d'accueil.
+     */
     @Override
     public void onResume() {
         super.onResume();
-
         String lastMode = prefs.getString("last_played_mode", "classique");
         int savedGridSize = prefs.getInt("current_grid_size", 4);
 
         updateScoresDisplay(lastMode, savedGridSize);
-
-        int chipIdToCheck;
-        if (savedGridSize == 3) {
-            chipIdToCheck = R.id.chip_3x3;
-        } else if (savedGridSize == 5) {
-            chipIdToCheck = R.id.chip_5x5;
-        } else if (savedGridSize == 6) {
-            chipIdToCheck = R.id.chip_6x6;
-        } else {
-            chipIdToCheck = R.id.chip_4x4;
-        }
-
-        chipGroupGridSize.check(chipIdToCheck);
-
+        updateChipSelection(savedGridSize);
         loadSavedGamePreview(lastMode, savedGridSize);
     }
 
+    /**
+     * Met à jour graphiquement la puce (Chip) sélectionnée.
+     */
+    private void updateChipSelection(int size) {
+        int id = R.id.chip_4x4;
+        if (size == 3) id = R.id.chip_3x3;
+        else if (size == 5) id = R.id.chip_5x5;
+        else if (size == 6) id = R.id.chip_6x6;
+        chipGroupGridSize.check(id);
+    }
+
+    /**
+     * Affiche le meilleur score, le score actuel de la sauvegarde et
+     * le nombre total de parties via Room et LiveData.
+     */
     private void updateScoresDisplay(String mode, int size) {
-        String bestScoreKey = "best_score_" + mode + "_" + size;
-        int bestScore = prefs.getInt(bestScoreKey, 0);
+        // Record personnel
+        int bestScore = prefs.getInt("best_score_" + mode + "_" + size, 0);
         textBestScore.setText(String.format("%,d", bestScore).replace(',', ' '));
 
-        String gridStateKey = "last_grid_" + mode + "_" + size;
-        String savedGridJson = prefs.getString(gridStateKey, null);
+        // Score de la partie en pause
+        String savedGridJson = prefs.getString("last_grid_" + mode + "_" + size, null);
         int currentScore = 0;
-
         if (savedGridJson != null) {
-            Grid savedGrid = gson.fromJson(savedGridJson, Grid.class);
-            if (savedGrid != null) {
-                currentScore = savedGrid.getScore();
-            }
+            Grid grid = gson.fromJson(savedGridJson, Grid.class);
+            if (grid != null) currentScore = grid.getScore();
         }
         textCurrentScore.setText(String.format("%,d", currentScore).replace(',', ' '));
 
-        if (gamesPlayedLiveData != null) {
+        // Observation du nombre de parties via le DAO
+        if (gamesPlayedLiveData != null)
             gamesPlayedLiveData.removeObservers(getViewLifecycleOwner());
-        }
 
-        int modeId = 1;
-        if (mode.equals("multijoueur")) modeId = 2;
-        else if (mode.equals("defi")) modeId = 3;
-
-        gamesPlayedLiveData = gameDao.getNbGamePlayedByGridSizeAndMode(size, modeId);
+        // Mode Classique = 1 dans la base de données
+        gamesPlayedLiveData = gameDao.getNbGamePlayedByGridSizeAndMode(size, 1);
         gamesPlayedLiveData.observe(getViewLifecycleOwner(), count -> {
-            int nbParties = (count != null) ? count : 0;
-            textGamesPlayed.setText(String.valueOf(nbParties));
+            textGamesPlayed.setText(String.valueOf(count != null ? count : 0));
         });
     }
 
+    /**
+     * Charge et affiche la vue "Reprendre" si une sauvegarde JSON existe.
+     */
     private void loadSavedGamePreview(String gameMode, int gridSize) {
-        String gridStateKey = "last_grid_" + gameMode + "_" + gridSize;
-        String savedGridJson = prefs.getString(gridStateKey, null);
+        String savedGridJson = prefs.getString("last_grid_" + gameMode + "_" + gridSize, null);
 
         if (savedGridJson != null) {
             cardSavedGame.setVisibility(View.VISIBLE);
-
             Grid savedGrid = gson.fromJson(savedGridJson, Grid.class);
 
-            String details = "Score : " + String.format("%,d", savedGrid.getScore()).replace(',', ' ') + " · Grille " + gridSize + "×" + gridSize;
-            tvSavedDetails.setText(details);
+            tvSavedDetails.setText(String.format("Score : %,d · Grille %d×%d", savedGrid.getScore(), gridSize, gridSize).replace(',', ' '));
 
             buildMiniGrid(savedGrid);
 
@@ -198,28 +194,27 @@ public class HomeFragment extends Fragment {
                 intent.putExtra("game_mode", gameMode);
                 startActivity(intent);
             });
-
         } else {
             cardSavedGame.setVisibility(View.GONE);
         }
     }
 
+    /**
+     * Construit programmatiquement une version miniature du plateau de jeu.
+     * Utilise un facteur d'échelle pour s'adapter aux différentes tailles (3x3 à 6x6).
+     */
     private void buildMiniGrid(Grid grid) {
         int size = grid.getSize();
         miniGridLayout.removeAllViews();
         miniGridLayout.setColumnCount(size);
         miniGridLayout.setRowCount(size);
 
-        Tile[][] tiles = grid.getGrid();
-        Context context = requireContext();
-
         float scaleFactor = 4.0f / size;
-
         int margin = Math.max(1, (int) dpToPx(1.5f * scaleFactor));
 
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
-                TextView cell = new TextView(context);
+                TextView cell = new TextView(requireContext());
 
                 GridLayout.LayoutParams params = new GridLayout.LayoutParams();
                 params.rowSpec = GridLayout.spec(row, 1, 1f);
@@ -229,36 +224,25 @@ public class HomeFragment extends Fragment {
                 params.setMargins(margin, margin, margin, margin);
                 cell.setLayoutParams(params);
 
-                int value = (tiles[row][col] != null) ? tiles[row][col].getValue() : 0;
-
+                int value = (grid.getGrid()[row][col] != null) ? grid.getGrid()[row][col].getValue() : 0;
                 cell.setGravity(Gravity.CENTER);
-                cell.setTypeface(ResourcesCompat.getFont(context, R.font.outfit_black));
-
+                cell.setTypeface(ResourcesCompat.getFont(requireContext(), R.font.outfit_black));
                 cell.setIncludeFontPadding(false);
-                cell.setPadding(0, 0, 0, 0);
-                cell.setMaxLines(1);
 
                 if (value > 0) {
                     cell.setText(String.valueOf(value));
-
-                    if (value >= 1000) {
-                        cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 5f * scaleFactor);
-                    } else if (value >= 100) {
-                        cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 6.5f * scaleFactor);
-                    } else if (value >= 10) {
-                        cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8.5f * scaleFactor);
-                    } else {
-                        cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10f * scaleFactor);
-                    }
+                    // Ajustement dynamique de la taille du texte miniature
+                    float textSize = (value >= 1000) ? 5f : (value >= 100) ? 6.5f : (value >= 10) ? 8.5f : 10f;
+                    cell.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize * scaleFactor);
                 }
 
+                // Application du thème visuel sur la miniature
                 GradientDrawable bg = new GradientDrawable();
                 bg.setShape(GradientDrawable.RECTANGLE);
-
                 bg.setCornerRadius(dpToPx(4f * scaleFactor));
-                bg.setColor(TileTheme.getBackgroundColor(context, value));
+                bg.setColor(TileTheme.getBackgroundColor(requireContext(), value));
 
-                cell.setTextColor(TileTheme.getTextColor(context, value));
+                cell.setTextColor(TileTheme.getTextColor(requireContext(), value));
                 cell.setBackground(bg);
 
                 miniGridLayout.addView(cell);

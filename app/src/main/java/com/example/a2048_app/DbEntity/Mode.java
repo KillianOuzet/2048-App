@@ -7,16 +7,27 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Entité Room représentant un mode de jeu (ex: Classique, Multijoueur, Défi).
+ * Cette table sert de dictionnaire/référence pour classer et lier
+ * chaque partie (Game) à son mode spécifique de manière optimisée.
+ */
 @Entity(tableName = "Mode")
 public class Mode implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private String gameMode;
+
+    // Le nom textuel du mode (utilisé pour les requêtes ou l'affichage)
+    private final String gameMode;
 
     public Mode(String gameMode) {
         this.gameMode = gameMode;
     }
+
+    // --- Implémentation de Parcelable ---
+    // Permet de sérialiser l'objet pour le transmettre facilement
+    // entre différentes Activités ou Fragments via des Intents/Bundles.
 
     protected Mode(Parcel in) {
         id = in.readInt();
@@ -35,24 +46,6 @@ public class Mode implements Parcelable {
         }
     };
 
-    // Getters
-    public int getId() {
-        return id;
-    }
-
-    public String getGameMode() {
-        return gameMode;
-    }
-
-    // Setters
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setGameMode(String gameMode) {
-        this.gameMode = gameMode;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -62,5 +55,19 @@ public class Mode implements Parcelable {
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeString(gameMode);
+    }
+
+    // --- Getters & Setters ---
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getGameMode() {
+        return gameMode;
     }
 }

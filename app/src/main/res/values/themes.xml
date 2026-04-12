@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <!--                    THÈME DE BASE                           -->
-    <!--        (attributs Material communs aux 3 thèmes)           -->
-    <!-- ═══════════════════════════════════════════════════════════ -->
     <style name="Theme.App.Base" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Désactive l'ActionBar par défaut -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
@@ -19,12 +14,8 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <!--                     THÈME CLAIR                            -->
-    <!-- ═══════════════════════════════════════════════════════════ -->
     <style name="Theme.App.Light" parent="Theme.App.Base">
 
-        <!-- ── Couleurs Material Components standard ── -->
         <item name="colorPrimary">@color/light_primary</item>
         <item name="colorPrimaryVariant">@color/light_primary2</item>
         <item name="colorSecondary">@color/light_accent</item>
@@ -43,36 +34,27 @@
         <item name="android:navigationBarColor">@color/light_nav</item>
         <item name="android:windowLightStatusBar">true</item>
 
-        <!-- ── Attributs personnalisés 2048 ── -->
-
-        <!-- Arrière-plans -->
         <item name="bgColor">@color/light_bg</item>
         <item name="bgColor2">@color/light_bg2</item>
         <item name="bgColor3">@color/light_bg3</item>
 
-        <!-- Cartes -->
         <item name="cardColor">@color/light_card</item>
         <item name="cardColor2">@color/light_card2</item>
         <item name="cardColor3">@color/light_card3</item>
 
-        <!-- Couleurs principales -->
         <item name="primaryColor">@color/light_primary</item>
         <item name="primaryColor2">@color/light_primary2</item>
         <item name="accentColor">@color/light_accent</item>
 
-        <!-- Textes -->
         <item name="textColor">@color/light_text</item>
         <item name="textColor2">@color/light_text2</item>
         <item name="textColor3">@color/light_text3</item>
 
-        <!-- Bordures -->
         <item name="borderColor">@color/light_border</item>
         <item name="borderColor2">@color/light_border2</item>
 
-        <!-- Grille -->
         <item name="tileBgColor">@color/light_tile_bg</item>
 
-        <!-- Tuiles -->
         <item name="tile2Color">@color/light_tile_2</item>
         <item name="tile4Color">@color/light_tile_4</item>
         <item name="tile8Color">@color/light_tile_8</item>
@@ -85,23 +67,18 @@
         <item name="tile1024Color">@color/light_tile_1024</item>
         <item name="tile2048Color">@color/light_tile_2048</item>
 
-        <!-- Texte tuiles -->
         <item name="tileTextDark">@color/light_tile_text_dark</item>
         <item name="tileTextLight">@color/light_tile_text_light</item>
 
-        <!-- Badge -->
         <item name="badgeBgColor">@color/light_badge_bg</item>
         <item name="badgeTextColor">@color/light_badge_text</item>
 
-        <!-- Toggle -->
         <item name="toggleOffColor">@color/light_toggle_off</item>
         <item name="toggleOnColor">@color/light_toggle_on</item>
 
-        <!-- Navigation -->
         <item name="navColor">@color/light_nav</item>
         <item name="navActiveColor">@color/light_nav_active</item>
 
-        <!-- Scrollbar -->
         <item name="scrollbarColor">@color/light_scrollbar</item>
 
         <item name="dangerColor">@color/light_dangerColor</item>
@@ -114,13 +91,8 @@
         <item name="borderColorTuilesObj">@color/light_borderColorTuilesObj</item>
     </style>
 
-
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <!--                     THÈME SOMBRE                           -->
-    <!-- ═══════════════════════════════════════════════════════════ -->
     <style name="Theme.App.Dark" parent="Theme.App.Base">
 
-        <!-- ── Couleurs Material Components standard ── -->
         <item name="colorPrimary">@color/dark_primary</item>
         <item name="colorPrimaryVariant">@color/dark_primary2</item>
         <item name="colorSecondary">@color/dark_accent</item>
@@ -139,36 +111,27 @@
         <item name="android:navigationBarColor">@color/dark_nav</item>
         <item name="android:windowLightStatusBar">false</item>
 
-        <!-- ── Attributs personnalisés 2048 ── -->
-
-        <!-- Arrière-plans -->
         <item name="bgColor">@color/dark_bg</item>
         <item name="bgColor2">@color/dark_bg2</item>
         <item name="bgColor3">@color/dark_bg3</item>
 
-        <!-- Cartes -->
         <item name="cardColor">@color/dark_card</item>
         <item name="cardColor2">@color/dark_card2</item>
         <item name="cardColor3">@color/dark_card3</item>
 
-        <!-- Couleurs principales -->
         <item name="primaryColor">@color/dark_primary</item>
         <item name="primaryColor2">@color/dark_primary2</item>
         <item name="accentColor">@color/dark_accent</item>
 
-        <!-- Textes -->
         <item name="textColor">@color/dark_text</item>
         <item name="textColor2">@color/dark_text2</item>
         <item name="textColor3">@color/dark_text3</item>
 
-        <!-- Bordures -->
         <item name="borderColor">@color/dark_border</item>
         <item name="borderColor2">@color/dark_border2</item>
 
-        <!-- Grille -->
         <item name="tileBgColor">@color/dark_tile_bg</item>
 
-        <!-- Tuiles -->
         <item name="tile2Color">@color/dark_tile_2</item>
         <item name="tile4Color">@color/dark_tile_4</item>
         <item name="tile8Color">@color/dark_tile_8</item>
@@ -181,23 +144,18 @@
         <item name="tile1024Color">@color/dark_tile_1024</item>
         <item name="tile2048Color">@color/dark_tile_2048</item>
 
-        <!-- Texte tuiles -->
         <item name="tileTextDark">@color/dark_tile_text_dark</item>
         <item name="tileTextLight">@color/dark_tile_text_light</item>
 
-        <!-- Badge -->
         <item name="badgeBgColor">@color/dark_badge_bg</item>
         <item name="badgeTextColor">@color/dark_badge_text</item>
 
-        <!-- Toggle -->
         <item name="toggleOffColor">@color/dark_toggle_off</item>
         <item name="toggleOnColor">@color/dark_toggle_on</item>
 
-        <!-- Navigation -->
         <item name="navColor">@color/dark_nav</item>
         <item name="navActiveColor">@color/dark_nav_active</item>
 
-        <!-- Scrollbar -->
         <item name="scrollbarColor">@color/dark_scrollbar</item>
 
         <item name="dangerColor">@color/dark_dangerColor</item>
@@ -211,13 +169,8 @@
 
     </style>
 
-
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <!--                    THÈME COLORÉ                            -->
-    <!-- ═══════════════════════════════════════════════════════════ -->
     <style name="Theme.App.Color" parent="Theme.App.Base">
 
-        <!-- ── Couleurs Material Components standard ── -->
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryVariant">@color/color_primary2</item>
         <item name="colorSecondary">@color/color_accent</item>
@@ -236,36 +189,27 @@
         <item name="android:navigationBarColor">@color/color_nav</item>
         <item name="android:windowLightStatusBar">false</item>
 
-        <!-- ── Attributs personnalisés 2048 ── -->
-
-        <!-- Arrière-plans -->
         <item name="bgColor">@color/color_bg</item>
         <item name="bgColor2">@color/color_bg2</item>
         <item name="bgColor3">@color/color_bg3</item>
 
-        <!-- Cartes -->
         <item name="cardColor">@color/color_card</item>
         <item name="cardColor2">@color/color_card2</item>
         <item name="cardColor3">@color/color_card3</item>
 
-        <!-- Couleurs principales -->
         <item name="primaryColor">@color/color_primary</item>
         <item name="primaryColor2">@color/color_primary2</item>
         <item name="accentColor">@color/color_accent</item>
 
-        <!-- Textes -->
         <item name="textColor">@color/color_text</item>
         <item name="textColor2">@color/color_text2</item>
         <item name="textColor3">@color/color_text3</item>
 
-        <!-- Bordures -->
         <item name="borderColor">@color/color_border</item>
         <item name="borderColor2">@color/color_border2</item>
 
-        <!-- Grille -->
         <item name="tileBgColor">@color/color_tile_bg</item>
 
-        <!-- Tuiles -->
         <item name="tile2Color">@color/color_tile_2</item>
         <item name="tile4Color">@color/color_tile_4</item>
         <item name="tile8Color">@color/color_tile_8</item>
@@ -278,23 +222,18 @@
         <item name="tile1024Color">@color/color_tile_1024</item>
         <item name="tile2048Color">@color/color_tile_2048</item>
 
-        <!-- Texte tuiles -->
         <item name="tileTextDark">@color/color_tile_text_dark</item>
         <item name="tileTextLight">@color/color_tile_text_light</item>
 
-        <!-- Badge -->
         <item name="badgeBgColor">@color/color_badge_bg</item>
         <item name="badgeTextColor">@color/color_badge_text</item>
 
-        <!-- Toggle -->
         <item name="toggleOffColor">@color/color_toggle_off</item>
         <item name="toggleOnColor">@color/color_toggle_on</item>
 
-        <!-- Navigation -->
         <item name="navColor">@color/color_nav</item>
         <item name="navActiveColor">@color/color_nav_active</item>
 
-        <!-- Scrollbar -->
         <item name="scrollbarColor">@color/color_scrollbar</item>
 
         <item name="dangerColor">@color/color_dangerColor</item>

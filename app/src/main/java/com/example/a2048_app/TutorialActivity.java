@@ -177,7 +177,7 @@ public class TutorialActivity extends BaseActivity {
         layout.addView(tvDesc);
 
         FrameLayout demoArea = new FrameLayout(this);
-        demoArea.setBackgroundResource(R.drawable.bg_grid); // Utilise le fond de ta grille
+        demoArea.setBackgroundResource(R.drawable.bg_grid);
         demoArea.setPadding(dpToPx(10), dpToPx(10), dpToPx(10), dpToPx(10));
         LinearLayout.LayoutParams paramDemo = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         demoArea.setLayoutParams(paramDemo);
@@ -334,7 +334,6 @@ public class TutorialActivity extends BaseActivity {
                 tResult.setText("");
                 tResult.setBackgroundColor(Color.TRANSPARENT);
 
-                // Animation Choc
                 t1.animate().translationX(dpToPx(10)).setDuration(200).start();
                 t2.animate().translationX(-dpToPx(10)).setDuration(200).withEndAction(() -> {
                     t1.setTranslationX(0);
@@ -405,7 +404,7 @@ public class TutorialActivity extends BaseActivity {
 
         TextView cellWin = new TextView(this);
         LinearLayout.LayoutParams winParams = new LinearLayout.LayoutParams(dpToPx(54), dpToPx(54));
-        winParams.setMargins(0, dpToPx(6), 0, 0); // Petit espace avec le titre
+        winParams.setMargins(0, dpToPx(6), 0, 0);
         cellWin.setLayoutParams(winParams);
         cellWin.setGravity(Gravity.CENTER);
         cellWin.setTypeface(androidx.core.content.res.ResourcesCompat.getFont(this, R.font.outfit_black));
@@ -415,7 +414,7 @@ public class TutorialActivity extends BaseActivity {
         colWin.addView(cellWin);
 
         TextView vs = new TextView(this);
-        vs.setText("  VS  "); // Espaces ajoutés pour aérer
+        vs.setText("  VS  ");
         vs.setTextSize(16f);
         vs.setTextColor(getThemeColor(R.attr.textColor3));
         vs.setTypeface(androidx.core.content.res.ResourcesCompat.getFont(this, R.font.outfit_bold));
@@ -435,7 +434,7 @@ public class TutorialActivity extends BaseActivity {
         gridLoss.setColumnCount(4);
         gridLoss.setRowCount(4);
         LinearLayout.LayoutParams gridParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        gridParams.setMargins(0, dpToPx(6), 0, 0); // Petit espace avec le titre
+        gridParams.setMargins(0, dpToPx(6), 0, 0);
         gridLoss.setLayoutParams(gridParams);
 
         int[] lossData = {2, 4, 8, 2, 16, 2, 4, 32, 4, 8, 2, 4, 8, 4, 16, 8};
